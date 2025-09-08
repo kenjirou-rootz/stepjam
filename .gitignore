@@ -1,4 +1,7 @@
-# WordPress Core
+# STEPJAM WordPress Development Environment
+# Local by Flywheel構造対応 + GitHub標準パターン統合
+
+# WordPress Core (Local by Flywheel対応)
 app/public/wp-admin/
 app/public/wp-includes/
 app/public/wp-*.php
@@ -7,11 +10,22 @@ app/public/index.php
 app/public/license.txt
 app/public/readme.html
 
+# WordPress Core (標準構造用)
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/index.php
+/license.txt
+/readme.html
+
 # Configuration
 app/public/wp-config.php
 app/public/.htaccess
+wp-config.php
+/.htaccess
 
-# Content (except theme)
+# Content (except stepjam-theme)
 app/public/wp-content/uploads/
 app/public/wp-content/plugins/
 app/public/wp-content/cache/
@@ -21,6 +35,16 @@ app/public/wp-content/backups/
 app/public/wp-content/languages/
 app/public/wp-content/themes/*
 !app/public/wp-content/themes/stepjam-theme/
+
+# Standard WordPress paths
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/languages/
+/wp-content/themes/twenty*/
+/wp-content/plugins/hello.php
+/wp-content/index.php
+/wp-content/plugins/index.php
+/wp-content/themes/index.php
 
 # Database
 *.sql
@@ -54,7 +78,8 @@ ssh/*.pem
 *.bak
 *_backup_*
 
-# Node modules (if any)
+# Node modules
 node_modules/
+
 # Backup directories with git repos
 backups/complete-backup/*/files/

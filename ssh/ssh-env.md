@@ -39,6 +39,9 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGprue0rsBixYlJdirfv5Wlw5fICoLOsh4/07w8SUVTo
 GPG keys：https://github.com/settings/keys  👈 取得パス
 ```
 
+##### push時の注意事項
+- 毎分 6回まで
+- 2G を超えるpushは分割して行う。
 
 
 

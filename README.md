@@ -1,21 +1,20 @@
-# STEPJAM WordPress Development Environment
+# STEPJAM
+
+**Official website project for STEPJAM, a dance event platform showcasing performances, schedules, and event details.**
 
 ## 🚀 クイックスタート
 
 ### 初回セットアップ
 ```bash
-# 1. Gitリポジトリ初期化
-cd "/Users/hayashikenjirou/Local Sites/stepjam"
-git init
-git remote add origin git@github.com:kenjirou-rootz/stepjam.git
+# 1. Gitリポジトリクローン
+git clone git@github.com:kenjirou-rootz/stepjam.git
+cd stepjam
 
-# 2. GitHub SSH設定
-./deploy/setup-github-ssh.sh
+# 2. デプロイスクリプト実行権限設定
+chmod +x deploy/*.sh
 
-# 3. 初回コミット
-git add .
-git commit -m "Initial commit"
-git push -u origin main
+# 3. 初回デプロイ
+./deploy/deploy-production.sh
 ```
 
 ### 日常の開発フロー
@@ -23,7 +22,9 @@ git push -u origin main
 # 1. 開発作業
 # テーマファイルを編集...
 
-# 2. デプロイ
+# 2. コミット & デプロイ
+git add .
+git commit -m "Update theme"
 ./deploy/deploy-production.sh
 ```
 
