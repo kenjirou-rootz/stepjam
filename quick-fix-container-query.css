@@ -1,0 +1,77 @@
+/**
+ * STEPJAM Dancers Section Container Query 修正CSS
+ * 
+ * 問題: @container (max-width: 767px) が適用されない
+ * 解決: Media Query代替案を適用
+ * 
+ * 適用方法: この内容をdancers-section.phpの<style>タグ内に追加
+ */
+
+/* Container Query 無効化 */
+/*
+@container (max-width: 767px) {
+    .dancers-section__container {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .dancers-section__day {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        flex: 0 0 auto;
+    }
+}
+*/
+
+/* 🔧 修正版: Media Query代替実装 */
+@media screen and (max-width: 767px) {
+    .dancers-section__container {
+        /* モバイルでは常に縦積み */
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+    
+    .dancers-section__day {
+        /* モバイルでは常に100vw幅で縦積み */
+        width: 100vw !important;
+        max-width: 100vw !important;
+        flex: 0 0 auto !important;
+    }
+    
+    .dancers-section__title-container {
+        padding: clamp(1rem, 4vw, 1rem) clamp(1rem, 4vw, 1rem) clamp(4rem, 8vw, 4rem) clamp(1rem, 4vw, 1rem);
+        max-height: none;
+    }
+    
+    /* タイトル画像のモバイル対応 */
+    .dancers-section__title-vector {
+        width: 100%;
+        max-width: calc(100vw - 4rem); /* 100vw - padding余白 */
+    }
+    
+    .dancers-section__day--day2 .dancers-section__title-vector {
+        width: 100%;
+        max-width: calc(100vw - 4rem); /* DAY2も100vw対応 */
+    }
+    
+    .dancers-section__genre-text {
+        font-size: clamp(1rem, 4vw, 1rem);
+    }
+}
+
+/* デバッグ用マーカー（本番環境では削除） */
+/*
+@media screen and (max-width: 767px) {
+    .dancers-section {
+        border: 2px solid lime !important;
+    }
+    
+    .dancers-section__container {
+        border: 2px solid red !important;
+    }
+    
+    .dancers-section__day {
+        border: 1px solid yellow !important;
+    }
+}
+*/

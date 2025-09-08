@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-full box-border scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEPJAMre</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'figma-black': '#000000',
+                        'figma-white': '#FFFFFF',
+                        'figma-cyan': '#00F7FF',
+                    },
+                    spacing: {
+                        'hero-full': '67.5rem', // 1080px
+                        'hero-fv': '41.625rem', // 666px
+                        'make-logo-w': '73.774rem', // 1180.38px
+                        'make-logo-h': '12.479rem', // 199.66px
+                        'make-mobile-w': '36.5rem', // 584px
+                        'make-mobile-h': '6.125rem', // 98px
+                        'sp-hero-box-w': '48.009rem', // 768.15px
+                        'sp-hero-box-h': '41.616rem', // 665.86px
+                        'sp-make-logo-w': '29.509rem', // 472.15px
+                        'sp-make-logo-h': '4.991rem', // 79.86px
+                    },
+                    fontSize: {
+                        'xs': ['0.75rem', { lineHeight: '1rem' }], // 12px minimum
+                        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                        'base': ['1rem', { lineHeight: '1.5rem' }],
+                        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+                        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+                        '5xl': ['3rem', { lineHeight: '1' }],
+                    },
+                    screens: {
+                        'mobile': {'max': '767px'},
+                        'tablet': '768px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* ACF Debug Markers */
+        [data-acf]::before {
+            content: attr(data-acf);
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 10px;
+            background: #f59e0b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 2px;
+            z-index: 9999;
+            display: none; /* Production: none */
+        }
+        
+        /* Debug mode - 開発時のみ */
+        .debug [data-acf]::before {
+            display: block;
+        }
+        
+        /* Swiper Custom Styles */
+        .swiper-wrapper {
+            transition-timing-function: ease-in !important;
+        }
+        
+        /* Logo Slider Continuous Animation */
+        .logo-slider-desktop .swiper-wrapper,
+        .logo-slider-mobile .swiper-wrapper {
+            transition-timing-function: linear !important;
+        }
+
+        /* Main Slider Responsive Width */
+        .main-slider-desktop .swiper-slide,
+        .main-slider-mobile .swiper-slide {
+            width: 61.8% !important; /* 1186px / 1920px = 61.8% */
+            height: 41.625rem !important; /* 666px */
+            flex-shrink: 0 !important;
+        }
+        
+        /* Mobile specific slider adjustments */
+        @media (max-width: 767px) {
+            .main-slider-mobile .swiper-slide {
+                width: 153% !important; /* 1176px / 768px = 153% */
+            }
+        }
+        
+        /* ========================================
+           Navigation Overlay Responsive Design
+           ======================================== */
+        
+        /* Nav overlay responsive adjustments - 768px unified breakpoint */
+        @media (max-width: 767px) {
+            /* Mobile width adjustment - full width on mobile */
+            #nav-overlay {
+                max-width: 100% !important; /* Full width on mobile */
+            }
+            
+            #nav-overlay .flex.gap-11 {
+                gap: 1.5rem; /* Reduce gap for mobile */
+            }
+            
+            #nav-overlay [data-name="menu-area"] {
+                padding-left: 1.5rem; /* Reduce left padding for mobile */
+                gap: 2rem; /* Reduce vertical gap */
+            }
+            
+            #nav-overlay [data-name="active-menu"] {
+                gap: 1rem; /* Reduce gap between icon and text */
+                min-width: 100%; /* Full width on mobile */
+            }
+            
+            #nav-overlay [data-name="desk-nav-menu"] {
+                min-width: 100%; /* Full width on mobile */
+            }
+            
+            #nav-overlay [data-name="desk-nav_footermenu"] {
+                min-width: 100%; /* Full width on mobile */
+            }
+        }
+        
+        /* ========================================
+           Responsive Width Adaptation
+           ======================================== */
+        
+        /* Base wrapper: Full width responsive */
+        .site-responsive-wrapper {
+            width: 100%;
+            position: relative;
+        }
+        
+        /* Text minimum size constraint */
+        .text-responsive {
+            font-size: clamp(0.75rem, 1vw, 1rem); /* min 12px */
+        }
+        
+        /* ========================================
+           Advanced Responsive Layout - WHSJ Section
+           ======================================== */
+        
+        /* WHSJ Section Container */
+        .whsj-section-container {
+            display: grid;
+            grid-template-columns: 60% 30% 10%;  /* パーセンテージ指定で比率保持 */
+            grid-template-rows: 7fr 3fr;         /* 70% : 30% */
+            grid-template-areas:
+                "video-area    content-area  sono-area"
+                "vector-area   content-area  sono-area";
+            width: 100%;
+            height: 67.5rem; /* 1080px */
+            overflow: hidden;
+        }
+        
+        /* Video Area (Left Top) */
+        .whsj-video-area {
+            grid-area: video-area;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Vector Area (Left Bottom) */
+        .whsj-vector-area {
+            grid-area: vector-area;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Content Area (Center) */
+        .whsj-content-area {
+            grid-area: content-area;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 5rem;
+            gap: 1rem;
+        }
+        
+        /* Sono Area (Right) */
+        .whsj-sono-area {
+            grid-area: sono-area;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        /* WHSJ Text Responsive Font Size */
+        .whsj-text-responsive {
+            font-size: clamp(0.75rem, 2vw, 1rem); /* Mobile: 12-16px */
+        }
+        
+        @media (min-width: 768px) {
+            .whsj-text-responsive {
+                font-size: 0.875rem; /* Desktop: 14px */
+            }
+        }
+        
+        /* ========================================
+           Advanced Responsive Layout - Sponsor Section
+           ======================================== */
+        
+        /* Sponsor Section Container */
+        .sponsor-section-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 62% 38%; /* 670px : 410px の比率をパーセンテージで */
+            width: 100%;
+            max-width: 100vw;
+            height: 67.5rem; /* 1080px */
+            position: relative;
+        }
+        
+        /* Main Slider Container (Priority 1) */
+        .sponsor-main-slider {
+            grid-column: 1;
+            grid-row: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 3;
+        }
+        
+        /* Sponsor Content Container */
+        .sponsor-content-container {
+            grid-column: 1;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: 45% 55%; /* デフォルト */
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Sponsor Content Left (Priority 3) */
+        .sponsor-content-left {
+            grid-column: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Logo Slider Right (Priority 2) */
+        .sponsor-logo-right {
+            grid-column: 2;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Responsive breakpoints - Simplified */
+        @media (min-width: 768px) {
+            .sponsor-content-container {
+                grid-template-columns: 45% 55% !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .sponsor-content-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+            }
+            
+            .sponsor-content-left {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .sponsor-logo-right {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        }
+        
+        /* ========================================
+           Scroll Prevention & Box Model
+           ======================================== */
+        
+        /* Prevent horizontal scroll on all screen sizes */
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* Ensure proper box sizing for all elements */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* ========================================
+           Lib-Top Section Layout - CSS Grid
+           ======================================== */
+        
+        /* Desktop Lib-Top Container */
+        .lib-top-container {
+            display: grid;
+            grid-template-columns: 50% 6.7% 43.3%;  /* 左右対称・中央区切り */
+            grid-template-areas: "tokyo-area center-divider osaka-area";
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Desktop Grid Areas */
+        .lib-tokyo-area {
+            grid-area: tokyo-area;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lib-center-divider {
+            grid-area: center-divider;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lib-osaka-area {
+            grid-area: osaka-area;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Mobile Lib-Top Container */
+        .lib-top-container-mobile {
+            display: grid;
+            grid-template-columns: 48.8% 9.9% 41.3%;  /* モバイル比率調整 */
+            grid-template-areas: "tokyo-mobile center-mobile osaka-mobile";
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Mobile Grid Areas */
+        .lib-tokyo-area-mobile {
+            grid-area: tokyo-mobile;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lib-center-divider-mobile {
+            grid-area: center-mobile;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lib-osaka-area-mobile {
+            grid-area: osaka-mobile;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========================================
+           Lib-List Section Layout - CSS Grid
+           ======================================== */
+        
+        /* Desktop Lib-List Container */
+        .lib-list-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+                "header-area"
+                "cards-area";
+            height: 100%;
+            max-width: min(1200px, 90%);
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Desktop Header Area */
+        .lib-list-header-area {
+            grid-area: header-area;
+            display: grid;
+            grid-template-rows: 48.7% 51.3%;  /* 109px : 115px の比率 */
+            height: 100%;
+        }
+        
+        .lib-list-title-area {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem 0;
+        }
+        
+        .lib-list-button-area {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem 0;
+        }
+        
+        /* Desktop Cards Area */
+        .lib-list-cards-area {
+            grid-area: cards-area;
+            height: 100%;
+            padding: 1rem 0;
+        }
+        
+        .lib-list-cards-grid {
+            display: flex;
+            gap: clamp(1rem, 3.2%, 2rem);
+            height: 100%;
+            flex-wrap: nowrap;
+        }
+        
+        .lib-list-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1 1 0;
+            max-width: 300px;
+            min-width: 200px;
+        }
+        
+        .card-image {
+            flex: 1;
+            aspect-ratio: 9/16;
+            margin-bottom: 0;
+        }
+        
+        .card-text {
+            height: 43px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 1px;
+        }
+        
+        /* Mobile Lib-List Container */
+        .lib-list-container-mobile {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+                "header-area-mobile"
+                "cards-area-mobile";
+            height: 100%;
+            max-width: min(600px, 90%);
+            margin: 0 auto;
+            position: relative;
+            padding: 60px 0;
+        }
+        
+        /* Mobile Header Area */
+        .lib-list-header-area-mobile {
+            grid-area: header-area-mobile;
+            display: grid;
+            grid-template-rows: 48.7% 51.3%;  /* 109px : 115px の比率 */
+            height: 100%;
+        }
+        
+        .lib-list-title-area-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem 0;
+        }
+        
+        .lib-list-button-area-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem 0;
+        }
+        
+        /* Mobile Cards Area */
+        .lib-list-cards-area-mobile {
+            grid-area: cards-area-mobile;
+            height: 100%;
+            padding: 1rem 0;
+        }
+        
+        .lib-list-cards-grid-mobile {
+            display: flex;
+            gap: clamp(0.5rem, 1.3%, 1rem);
+            height: 100%;
+            padding: 0 5px;
+            flex-wrap: nowrap;
+        }
+        
+        .lib-list-card-mobile {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1 1 0;
+            max-width: 300px;
+            min-width: 69px;
+        }
+        
+        .card-image-mobile {
+            flex: 1;
+            aspect-ratio: 9/16;
+            margin-bottom: 0;
+        }
+        
+        .card-text-mobile {
+            height: 29px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 1px;
+        }
+        
+    </style>
+</head>
+<body class="h-full bg-figma-black text-figma-white font-sans overflow-x-hidden antialiased">
+    
+    <!-- Navigation Overlay (Node: 203:269) - height: 100vh レスポンシブ対応 -->
+    <nav id="nav-overlay" 
+         class="fixed top-0 left-0 bg-black bg-opacity-50 z-[9999] hidden" 
+         style="height: 100vh; width: 100%; max-width: 1200px; overflow: hidden;">
+        
+        <!-- Nav Content Container - Flexbox縦並びレイアウト -->
+        <div class="flex flex-col justify-between items-start p-0 h-full w-full" 
+             data-name="nav-open">
+            
+            <!-- Nav Header Area -->
+            <div class="flex flex-row gap-11 items-center justify-start w-full p-0" 
+                 style="height: 96.12px;" 
+                 data-name="nav-header">
+                
+                <!-- Close Button -->
+                <button id="nav-close-btn" 
+                        class="block cursor-pointer relative shrink-0" 
+                        style="width: 173.08px; height: 96.12px;" 
+                        data-name="nav-bt_close">
+                    <img src="assets/nav/nav-bt-close.svg" 
+                         alt="Close Navigation" 
+                         class="block max-w-none w-full h-full" />
+                </button>
+                
+                <!-- STEPJAM Logo -->
+                <div class="relative shrink-0" 
+                     style="width: clamp(80px, 106.67px, 150px); height: clamp(16px, 21.47px, 30px);" 
+                     data-name="nav-sjlogo">
+                    <img src="assets/nav/nav-sjlogo.svg" 
+                         alt="STEPJAM Logo" 
+                         class="block max-w-none w-full h-full" />
+                </div>
+                
+            </div>
+            
+            <!-- Menu Area -->
+            <div class="flex flex-col gap-14 items-end justify-start w-full overflow-hidden pl-10 pr-0 py-0" 
+                 data-name="menu-area">
+                
+                
+                <!-- Desktop Nav Menu -->
+                <div class="flex flex-col justify-start items-start w-full min-w-80 px-px py-0 space-y-6" 
+                     data-name="desk-nav-menu">
+                    
+                    <!-- HOME Menu Item -->
+                    <button class="nav-menu-item text-left text-white hover:text-figma-cyan transition-colors cursor-pointer" 
+                            style="font-family: 'Noto Sans JP', sans-serif; font-weight: 800; font-size: 2.625rem;"
+                            data-scroll-target="hero-section">
+                        HOME
+                    </button>
+                    
+                    <!-- SPONSORED Menu Item -->
+                    <button class="nav-menu-item text-left text-white hover:text-figma-cyan transition-colors cursor-pointer" 
+                            style="font-family: 'Noto Sans JP', sans-serif; font-weight: 800; font-size: 2.625rem;"
+                            data-scroll-target="sponsor-section">
+                        SPONSORED
+                    </button>
+                    
+                    <!-- WHAT SJ Menu Item -->
+                    <button class="nav-menu-item text-left text-white hover:text-figma-cyan transition-colors cursor-pointer" 
+                            style="font-family: 'Noto Sans JP', sans-serif; font-weight: 800; font-size: 2.625rem;"
+                            data-scroll-target="whsj-section">
+                        WHAT SJ
+                    </button>
+                    
+                    <!-- LIBRARY Menu Item with Dropdown -->
+                    <div class="library-dropdown relative">
+                        <button class="nav-menu-item text-left text-white hover:text-figma-cyan transition-colors cursor-pointer flex items-center" 
+                                style="font-family: 'Noto Sans JP', sans-serif; font-weight: 800; font-size: 2.625rem;"
+                                data-scroll-target="lib-top-section"
+                                id="library-toggle">
+                            LIBRARY
+                            <span class="ml-2 transform transition-transform duration-200" id="library-arrow">▼</span>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="library-submenu ml-4 mt-2 space-y-2 hidden" id="library-submenu">
+                            <button class="nav-submenu-item text-left text-white font-sans text-base hover:text-figma-cyan transition-colors cursor-pointer block" 
+                                    data-scroll-target="lib-list-section">
+                                TOKYO
+                            </button>
+                            <button class="nav-submenu-item text-left text-white font-sans text-base hover:text-figma-cyan transition-colors cursor-pointer block" 
+                                    data-scroll-target="lib-list-section">
+                                OSAKA
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Desktop Nav Footer Menu -->
+                <div class="flex flex-row gap-8 items-start justify-start w-full min-w-80 p-0" 
+                     style="height: 60px;" 
+                     data-name="desk-nav_footermenu">
+                    
+                    <a href="https://rootz-adl.com/company/" 
+                       target="_blank"
+                       class="text-left text-white font-sans text-lg hover:text-figma-cyan transition-colors cursor-pointer">
+                        会社概要
+                    </a>
+                    
+                    <a href="https://rootz-adl.com/privacy-policy-2/" 
+                       target="_blank"
+                       class="text-left text-white font-sans text-lg hover:text-figma-cyan transition-colors cursor-pointer">
+                        個人情報
+                    </a>
+                    
+                </div>
+                
+            </div>
+            
+            <!-- Nav Item Obi (Bottom Decoration) -->
+            <div class="flex flex-row gap-2.5 items-end justify-start w-full p-0 opacity-20" 
+                 data-name="nav-item_obi">
+                
+                <div class="relative shrink-0" 
+                     style="width: clamp(800px, 1215.55px, 100%); height: clamp(30px, 37.03px, 45px);" 
+                     data-name="open-obi">
+                    <img src="assets/nav/open-obi.svg" 
+                         alt="Navigation Decoration" 
+                         class="block max-w-none w-full h-full" />
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </nav>
+    
+    <!-- Responsive Scale Wrapper - Ultra Think Implementation -->
+    <div class="site-responsive-wrapper">
+    
+    <!-- Header Section (Node: 156:351) - レスポンシブ対応ガイド準拠 -->
+    <header class="fixed top-0 left-0 w-full bg-figma-black z-50" 
+            style="height: 97.36px;" 
+        
+        <!-- Header Container - 固定サイズ配置 -->
+        <div class="w-full h-full relative">
+            
+            <!-- Navigation Area - 固定位置 -->
+            <div style="position: absolute; 
+                        left: 0; 
+                        top: 0; 
+                        width: 173.08px; 
+                        height: 97.36px;">
+                <button 
+                    id="nav-toggle"
+                    class="w-full h-full bg-transparent hover:bg-white hover:bg-opacity-10 transition-colors"
+                    aria-label="メニュー開閉"
+                    data-acf="nav-button">
+                    <img src="assets/header/header-nav.svg" 
+                         alt="Navigation" 
+                         class="w-full h-full object-contain" />
+                </button>
+            </div>
+            
+            <!-- Logo Area - SVG座標に基づく位置（217px） -->
+            <div style="position: absolute; 
+                        left: 217px; 
+                        top: 50%; 
+                        transform: translateY(-50%); 
+                        width: 96.75px; 
+                        height: 22.415px;">
+                <a href="#" 
+                   class="block w-full h-full"
+                   data-acf="logo-link">
+                    <img src="assets/header/header-logo.svg" 
+                         alt="STEPJAM" 
+                         class="w-full h-full object-contain" />
+                </a>
+            </div>
+            
+        </div>
+    </header>
+    
+    <!-- Main Content with Header Offset -->
+    <div class="w-full" style="margin-top: 97.36px;"></div>
+    
+    <!-- Main Content -->
+    <main class="relative">
+        <!-- Hero Section (Node: 113:6263) - レスポンシブガイド準拠 -->
+        <section id="hero-section" class="relative w-full bg-figma-black overflow-hidden" 
+                 data-acf="hero-section">
+            <!-- Desktop Hero Frame: 1920px × 1080px -->
+            <div class="hidden tablet:block relative w-full h-hero-full">
+                <!-- Hero FV Section (Node: 155:314) - 中央配置・ボーダー付き -->
+                <div class="absolute inset-x-0 top-[208px] w-full h-hero-fv border border-figma-white">
+                    <!-- Make The Moment Logo (Node: 114:7293) - レスポンシブガイド準拠 -->
+                    <div class="relative h-full flex items-center justify-center" data-acf="hero-content-desktop">
+                        <div class="relative" 
+                             style="width: clamp(55%, 61.5%, 70%); min-width: 300px; aspect-ratio: 1180.38/199.66;">
+                            <img src="assets/hero/make-the-moment.svg" 
+                                 alt="make the moment" 
+                                 class="w-full h-full object-contain" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+                <!-- Mobile Hero Frame: 768px × 1080px -->
+                <div class="block tablet:hidden relative w-full h-hero-full">
+                    <!-- SP Hero Box (Node: 158:95) - y軸中央配置・ボーダー付きエリア -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-figma-white" 
+                         style="width: clamp(90%, 95%, 100%); height: clamp(400px, 665.86px, 70vh);"
+                         data-acf="sp-hero-box">
+                        
+                        <!-- Make The Moment Logo Mobile (Node: 158:96) - レスポンシブガイド準拠 -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" 
+                             style="width: clamp(60%, 70%, 85%); min-width: 250px; aspect-ratio: 1180.38/199.66;"
+                             data-acf="sp-hero-content">
+                            <img src="assets/hero/make-the-moment.svg" 
+                                 alt="make the moment" 
+                                 class="w-full h-full object-contain" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <!-- Sponsor Section - MCP Verified Implementation -->
+        <!-- Desktop Sponsor Section (Node: 156:330) - Responsive Grid Layout -->
+        <section id="sponsor-section" class="hidden tablet:block relative w-full bg-figma-black overflow-hidden"
+                 data-acf="sponsor-section-desktop">
+            <div class="sponsor-section-container">
+                
+                <!-- Desktop Main Slider (Node: 156:712) - Priority 1 -->
+                <div class="sponsor-main-slider"
+                     data-acf="spon-sl-desktop">
+                    
+                    <!-- Swiper Container -->
+                    <div class="swiper main-slider-desktop w-full h-full">
+                        <div class="swiper-wrapper">
+                            
+                            <!-- Slide 01 (Node: 156:713) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[85%] h-full"
+                                     data-acf="spon-sl-01-desktop">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-01">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 02 (Node: 156:714) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[85%] h-full"
+                                     data-acf="spon-sl-02-desktop">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-02">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            
+                            <!-- Slide 03 (Node: 156:715) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[85%] h-full"
+                                     data-acf="spon-sl-03-desktop">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-03">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sponsor Content Container (Node: 156:335) -->
+                <div class="sponsor-content-container"
+                     data-acf="spon-cont-desktop">
+                    
+                    <!-- Sponsor Content Left (Node: 156:727) - Priority 3 -->
+                    <div class="sponsor-content-left"
+                         data-acf="spon-cont-tl-desktop">
+                        
+                        <!-- Sponsor Content Image (Node: 156:339) -->
+                        <div class="w-[clamp(55%,calc(65% + 1vw),85%)] h-[clamp(40%,46.7%,55%)] flex items-center justify-center"
+                             data-acf="spon-cont-img-desktop">
+                            <img src="assets/spon/spon-cont-img.png" alt="Sponsor Content" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    
+                    <!-- Logo Slider Right (Node: 156:718) - Priority 2 -->
+                    <div class="sponsor-logo-right"
+                         data-acf="spon-sl-logo-desktop">
+                        
+                        <!-- Sponsor Logo Box (Node: 156:332) -->
+                        <div class="absolute top-[clamp(15%,19.1%,25%)] left-0 w-full h-[clamp(55%,61.7%,70%)] overflow-hidden"
+                             data-acf="spon-sl-logo-box-desktop">
+                            
+                            <!-- Logo Swiper Container -->
+                            <div class="swiper logo-slider-desktop w-full h-full">
+                                <div class="swiper-wrapper">
+                                    
+                                    <!-- ACF Sponsor 01 (Node: 156:334) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-01">
+                                            <img src="" alt="Sponsor 1" class="w-full h-full object-cover" data-acf="acf-logo-01">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- ACF Sponsor 02 (Node: 156:333) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-02">
+                                            <img src="" alt="Sponsor 2" class="w-full h-full object-cover" data-acf="acf-logo-02">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- ACF Sponsor 03 (Node: 156:726) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-03">
+                                            <img src="" alt="Sponsor 3" class="w-full h-full object-cover" data-acf="acf-logo-03">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mobile Sponsor Section (Node: 158:81) - Responsive Mobile Layout -->
+        <section class="block tablet:hidden relative w-full bg-figma-black overflow-hidden h-hero-full"
+                 data-acf="sponsor-section-mobile">
+            <div class="sponsor-section-container">
+                
+                <!-- Mobile Main Slider (Node: 158:90) -->
+                <div class="sponsor-main-slider"
+                     data-acf="spon-sl-mobile">
+                    
+                    <!-- Mobile Swiper Container -->
+                    <div class="swiper main-slider-mobile w-full h-full">
+                        <div class="swiper-wrapper">
+                            
+                            <!-- Mobile Slide 01 (Node: 158:93) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[120%] h-full"
+                                     data-acf="spon-sl-01-mobile">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-mobile-01">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            
+                            <!-- Mobile Slide 02 (Node: 158:92) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[120%] h-full"
+                                     data-acf="spon-sl-02-mobile">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-mobile-02">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            
+                            <!-- Mobile Slide 03 (Node: 158:91) -->
+                            <div class="swiper-slide flex items-center justify-center">
+                                <div class="bg-red-500 rounded-[51px] w-[120%] h-full"
+                                     data-acf="spon-sl-03-mobile">
+                                    <video 
+                                        class="w-full h-full object-cover rounded-[51px]" 
+                                        autoplay 
+                                        muted 
+                                        loop
+                                        data-acf="acf-main-video-mobile-03">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Sponsor Container -->
+                <div class="sponsor-content-container"
+                     data-acf="spon-cont-mobile">
+                    
+                    <!-- Mobile Sponsor Logo Slider -->
+                    <div class="sponsor-logo-right"
+                         data-acf="spon-sl-logo-mobile">
+                        
+                        <!-- Mobile Sponsor Logo Box -->
+                        <div class="absolute top-[clamp(15%,19.1%,25%)] left-0 w-full h-[clamp(55%,61.7%,70%)] overflow-hidden"
+                             data-acf="spon-sl-logo-box-mobile">
+                            
+                            <!-- Mobile Logo Swiper Container -->
+                            <div class="swiper logo-slider-mobile w-full h-full">
+                                <div class="swiper-wrapper">
+                                    
+                                    <!-- Mobile ACF Sponsor 01 (Node: 158:85) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-01-mobile">
+                                            <img src="" alt="Mobile Sponsor 1" class="w-full h-full object-cover" data-acf="acf-logo-mobile-01">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Mobile ACF Sponsor 02 (Node: 158:86) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-02-mobile">
+                                            <img src="" alt="Mobile Sponsor 2" class="w-full h-full object-cover" data-acf="acf-logo-mobile-02">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Mobile ACF Sponsor 03 (Node: 158:87) -->
+                                    <div class="swiper-slide">
+                                        <div class="bg-figma-cyan w-full h-full min-w-0 aspect-[564/255]"
+                                             data-acf="acf-spon-sl-spon-03-mobile">
+                                            <img src="" alt="Mobile Sponsor 3" class="w-full h-full object-cover" data-acf="acf-logo-mobile-03">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Sponsor Content Title/Image -->
+                    <div class="sponsor-content-left"
+                         data-acf="spon-cont-tl-mobile">
+                        
+                        <!-- Mobile Sponsor Content Image -->
+                        <div class="w-[clamp(55%,calc(65% + 1vw),85%)] h-[clamp(40%,46.7%,55%)] flex items-center justify-center"
+                             data-acf="spon-cont-img-mobile">
+                            <img src="assets/spon/spon-cont-img.png" alt="Mobile Sponsor Content" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- WHSJ Section (Node: 156:480 Desktop / 158:68 Mobile) -->
+        <!-- Desktop WHSJ Section (Node: 156:480) - Responsive Grid Layout -->
+        <section id="whsj-section" class="hidden tablet:block relative w-full bg-figma-black overflow-hidden"
+                 data-acf="whsj-section-desktop">
+            <div class="whsj-section-container">
+                
+                <!-- Video Area (Left Top) -->
+                <div class="whsj-video-area bg-red-500"
+                     data-acf="whsj-video-placeholder-desktop">
+                    <div class="text-figma-white text-2xl font-bold">
+                        Video Placeholder
+                    </div>
+                </div>
+                
+                <!-- Vector Area (Left Bottom) -->
+                <div class="whsj-vector-area">
+                    <div class="scale-y-[-100%] w-full h-full">
+                        <div class="bg-transparent overflow-hidden relative w-full h-full"
+                             data-acf="whsj-cont-02-desktop">
+                            <!-- WHSJ Image 01 (Node: 156:483) -->
+                            <div class="w-full h-full flex items-center justify-center">
+                                <div class="scale-y-[-100%] w-full h-full">
+                                    <img src="assets/whsj/whsj-img01.png" 
+                                         alt="WHSJ Content Image" 
+                                         class="block w-full h-full object-contain"
+                                         data-acf="whsj-img01-desktop">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Area (Center) -->
+                <div class="whsj-content-area"
+                     data-acf="whsj-cont-01-desktop">
+                    
+                    <!-- WHSJ TX Box 01 (Node: 156:490) -->
+                    <div class="flex justify-center w-full"
+                         data-acf="whsj-tx-box-01-desktop">
+                        <div class="scale-y-[-100%] w-full max-w-sm">
+                            <div class="bg-transparent overflow-hidden relative aspect-[327/252]">
+                                <!-- WHSJ TX Box 01 A (Node: 156:491) -->
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-[30%]"
+                                     data-acf="whsj-tx-box-01-a-desktop">
+                                    <img src="assets/whsj/whsj-tx-box-01-a.svg" 
+                                         alt="Promotion Title" 
+                                         class="block w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WHSJ Text Content (Node: 156:489) -->
+                    <div class="w-full"
+
+                         data-acf="whsj-txtbox-desktop">
+                        <div class="font-['Noto_Sans_JP'] font-extralight text-figma-white text-justify leading-snug tracking-wider"
+                             style="font-size: clamp(0.75rem, 1vw, 1rem); line-height: 1.375; letter-spacing: 0.05em;"
+
+                             data-acf="whsj-text-content-desktop">
+                            <p class="block leading-snug" data-acf="whsj-main-text">
+                                ここにテキストがはいります。ここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいります
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sono Area (Right) -->
+                <div class="whsj-sono-area">
+                    <div class="rotate-180 scale-y-[-100%] w-full h-full flex items-stretch justify-center">
+                        <div class="relative w-full h-full"
+
+                             data-acf="whsj-sono-box-desktop">
+                            <img src="assets/whsj/whsj-sono-box.svg" 
+                                 alt="WHSJ Sono Box" 
+                                 class="block w-full h-full object-cover object-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mobile WHSJ Section (Node: 158:68) - 768px × 1080px -->
+        <section class="block tablet:hidden relative w-full bg-figma-black overflow-hidden h-hero-full"
+
+                 data-acf="whsj-section-mobile">
+            <div class="w-full relative h-full">
+                
+                <!-- WHSJ Video Box Mobile (Node: 158:71) -->
+                <div class="absolute bg-red-500 left-1/2 translate-x-[-50%] w-full h-hero-fv top-0"
+
+                     data-acf="whsj-video-placeholder-mobile">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div class="text-figma-white text-xl font-bold">
+                            Mobile Video Placeholder
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- WHSJ Content 01 Mobile (Node: 158:72) - 768px × 1081px -->
+                <div class="absolute bg-transparent overflow-hidden w-full h-full"
+
+                     data-acf="whsj-cont-01-mobile">
+                    
+                    <!-- WHSJ Sono Box Mobile (Node: 158:73) - Responsive -->
+                    <div class="absolute flex items-center justify-center right-0 top-0 w-2/5 h-full hidden">
+                        <div class="flex-none rotate-180 scale-y-[-100%]">
+                            <div class="bg-transparent w-full h-full"
+
+                                 data-acf="whsj-sono-box-mobile">
+                                <img src="assets/whsj/whsj-sono-box.svg" 
+                                     alt="WHSJ Sono Box Mobile" 
+                                     class="block w-full h-full object-cover object-center">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ve Sono Mobile (Node: 158:74) - Fixed aspect ratio and responsive -->
+                    <div class="absolute right-0 top-0 z-10"
+                         style="width: clamp(120px, 20vw, 200px); height: 100%; aspect-ratio: 156.17/1181.45;"
+
+                         data-acf="ve-sono-mobile">
+                        <img src="assets/whsj/ve-sono.svg" 
+                             alt="Ve Sono Mobile" 
+                             class="w-full h-full object-contain">
+                    </div>
+                    
+                    <!-- WHSJ Text Box Mobile (Node: 158:75) - Responsive width -->
+                    <div class="absolute bg-black bg-opacity-60 overflow-hidden shadow-md"
+                         style="left: 0; top: 0; width: clamp(300px, 56.5%, 500px); height: 100%;"
+
+                         data-acf="whsj-tx-box-mobile">
+                        
+                        <!-- WHSJ Text Content Mobile (Node: 158:76) - Responsive sizing -->
+                        <div class="absolute bg-transparent overflow-hidden translate-x-[-50%]"
+                             style="left: 50%; top: clamp(250px, 33%, 400px); width: clamp(250px, 75%, 350px); height: clamp(300px, 44%, 500px);"
+
+                             data-acf="whsj-txtbox-mobile">
+                            <div class="absolute font-['Noto_Sans_JP'] font-extralight text-figma-white text-justify leading-snug tracking-wider whsj-text-responsive"
+                                 style="left: 0; top: 0; width: 100%; height: 100%; line-height: 1.375; letter-spacing: 0.05em;"
+
+                                 data-acf="whsj-text-content-mobile">
+                                <p class="block leading-snug" data-acf="whsj-main-text-mobile">
+                                    ここにテキストがはいります。ここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいりますここにテキストがはいります
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- WHSJ TX Box 01 Mobile (Node: 158:78) - Responsive sizing -->
+                        <div class="absolute flex items-center justify-center translate-x-[-50%]"
+                             style="left: 50%; top: clamp(80px, 9.5%, 120px); width: clamp(250px, 42.5%, 400px); aspect-ratio: 327/252;">
+                            <div class="flex-none scale-y-[-100%] w-full h-full">
+                                <div class="bg-transparent overflow-hidden relative w-full h-full"
+
+                                     data-acf="whsj-tx-box-01-mobile">
+                                    
+                                    <!-- WHSJ TX Box 01 A Mobile (Node: 158:79) - Centered -->
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-[30%]"
+
+                                         data-acf="whsj-tx-box-01-a-mobile">
+                                        <img src="assets/whsj/whsj-tx-box-01-a.svg" 
+                                             alt="Promotion Title Mobile" 
+                                             class="block w-full h-full object-contain">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- WHSJ Content 02 Mobile (Node: 158:69) - Responsive sizing -->
+                <div class="absolute flex items-center justify-center"
+                     style="left: 0; top: clamp(750px, 87%, 950px); width: 100%; height: clamp(100px, 12.8%, 150px);">
+                    <div class="flex-none scale-y-[-100%] w-full h-full">
+                        <div class="bg-transparent overflow-hidden relative w-full h-full"
+
+                             data-acf="whsj-cont-02-mobile">
+                            
+                            <!-- WHSJ Image 01 Mobile (Node: 158:70) - Responsive sizing -->
+                            <div class="absolute flex items-center justify-center left-0 top-1/2 translate-y-[-50%]"
+                                 style="width: clamp(300px, 50%, 450px); aspect-ratio: 384/140;">
+                                <div class="flex-none scale-y-[-100%] w-full h-full">
+                                    <img src="assets/whsj/whsj-img01.png" 
+                                         alt="WHSJ Content Image Mobile" 
+                                         class="w-full h-full object-contain"
+
+                                         data-acf="whsj-img01-mobile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lib-Top Section (Node: 156:507 Desktop / 158:60 Mobile) -->
+        <!-- Desktop Lib-Top Section (Node: 156:507) - CSS Grid Layout -->
+        <section id="lib-top-section" class="hidden tablet:block relative w-full bg-figma-black overflow-hidden"
+                 style="height: auto; padding: 100px 0;"
+                 data-acf="lib-top-section-desktop">
+            <div class="lib-top-container">
+                
+                <!-- Tokyo Area (Left) -->
+                <div class="lib-tokyo-area"
+                     data-acf="lib-tokyo-desktop">
+                    <!-- Tokyo Image Container -->
+                    <div class="w-full h-full flex items-center justify-center"
+                         data-acf="lib-img-tokyo-desktop">
+                        <div style="width: clamp(60%, 68.8%, 85%); aspect-ratio: 660/606;">
+                            <img src="assets/lib-top/lib-img-tokyo.png" 
+                                 alt="Tokyo Library Image" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Central Divider -->
+                <div class="lib-center-divider"
+                     data-acf="lib-center-divider-desktop">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div style="width: 100%; aspect-ratio: 128/1077;">
+                            <img src="assets/lib-top/lib-center-divider.svg" 
+                                 alt="Library Central Divider" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Osaka Area (Right) -->
+                <div class="lib-osaka-area"
+                     data-acf="lib-osaka-desktop">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div style="width: clamp(60%, 68.8%, 85%); aspect-ratio: 960/1077;">
+                            <img src="assets/lib-top/lib-osaka.svg" 
+                                 alt="Osaka Library Content" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mobile Lib-Top Section (Node: 158:60) - CSS Grid Layout -->
+        <section class="block tablet:hidden relative w-full bg-figma-black overflow-hidden"
+                 style="height: 29.6875rem;"
+                 data-acf="lib-top-section-mobile">
+            <div class="lib-top-container-mobile">
+                
+                <!-- Tokyo Area Mobile (Left) -->
+                <div class="lib-tokyo-area-mobile"
+                     data-acf="lib-tokyo-mobile">
+                    <!-- Tokyo Image Container Mobile -->
+                    <div class="w-full h-full flex items-center justify-center"
+                         data-acf="lib-img-tokyo-mobile">
+                        <div style="width: clamp(70%, 83.2%, 90%); aspect-ratio: 312/286;">
+                            <img src="assets/lib-top/lib-img-tokyo.png" 
+                                 alt="Tokyo Library Image Mobile" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Central Divider Mobile -->
+                <div class="lib-center-divider-mobile"
+                     data-acf="lib-center-divider-mobile">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div style="width: 100%; aspect-ratio: 76/475;">
+                            <img src="assets/lib-top/lib-center-divider.svg" 
+                                 alt="Library Central Divider Mobile" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Osaka Area Mobile (Right) -->
+                <div class="lib-osaka-area-mobile"
+                     data-acf="lib-osaka-mobile">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <div style="width: clamp(70%, 83.2%, 90%); aspect-ratio: 374/420;">
+                            <img src="assets/lib-top/lib-osaka.svg" 
+                                 alt="Osaka Library Content Mobile" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lib-List Section (Node: 156:616 Desktop / 158:33 Mobile) -->
+        <!-- Desktop Lib-List Section (Node: 156:616) - CSS Grid Layout -->
+        <section id="lib-list-section" class="hidden tablet:block relative w-full bg-figma-black"
+                 data-acf="lib-list-section-desktop">
+            <div class="lib-list-container">
+                
+                <!-- Header Area - Title and Buttons -->
+                <div class="lib-list-header-area"
+                     data-acf="lib-list-header-desktop">
+                    
+                    <!-- Title Area -->
+                    <div class="lib-list-title-area"
+                         data-acf="lib-list-box-ti-desktop">
+                        <div class="h-full flex items-center justify-start">
+                            <div style="width: clamp(60%, 62%, 75%); aspect-ratio: 398/81;">
+                                <img id="lib-list-title-desktop" 
+                                     src="assets/lib-list/lib-list-tokyo.png" 
+                                     alt="Library List Title" 
+                                     class="w-full h-full object-contain">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Button Area -->
+                    <div class="lib-list-button-area"
+                         data-acf="acf-tag-bt-desktop">
+                        <div class="flex items-center justify-center gap-4">
+                            <!-- Tokyo Button -->
+                            <button id="tag-bt-tokyo" 
+                                    class="library-tab-btn bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-thin tracking-wider transition-colors active"
+                                    style="width: 168px; height: 49px;"
+                                    data-acf="tag-bt-tokyo"
+                                    data-tab="tokyo">
+                                TOKYO
+                            </button>
+                            <!-- Osaka Button -->
+                            <button id="tag-bt-osaka" 
+                                    class="library-tab-btn bg-transparent border-2 border-blue-700 text-blue-700 px-8 py-3 rounded-full text-lg font-thin tracking-wider transition-colors"
+                                    style="width: 168px; height: 49px;"
+                                    data-acf="tag-bt-osaka"
+                                    data-tab="osaka">
+                                OSAKA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cards Area - Custom Posts -->
+                <div class="lib-list-cards-area"
+                     data-acf="acf-cust-post-desktop">
+                    <div class="lib-list-cards-grid">
+                        
+                        <!-- Tokyo Card 1 -->
+                        <div class="lib-list-card library-card"
+                             data-acf="acf-cust-post-1"
+                             data-tab="tokyo">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img01">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx01">
+                                <p class="text-white text-center text-sm font-light">Tokyo Card 1</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 2 -->
+                        <div class="lib-list-card library-card"
+                             data-acf="acf-cust-post-2"
+                             data-tab="tokyo">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img02">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx02">
+                                <p class="text-white text-center text-sm font-light">Tokyo Card 2</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 3 -->
+                        <div class="lib-list-card library-card"
+                             data-acf="acf-cust-post-3"
+                             data-tab="tokyo">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img03">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx03">
+                                <p class="text-white text-center text-sm font-light">Tokyo Card 3</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 4 -->
+                        <div class="lib-list-card library-card"
+                             data-acf="acf-cust-post-4"
+                             data-tab="tokyo">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img04">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx04">
+                                <p class="text-white text-center text-sm font-light">Tokyo Card 4</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 1 -->
+                        <div class="lib-list-card library-card hidden"
+                             data-acf="acf-cust-post-5"
+                             data-tab="osaka">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img05">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx05">
+                                <p class="text-white text-center text-sm font-light">Osaka Card 1</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 2 -->
+                        <div class="lib-list-card library-card hidden"
+                             data-acf="acf-cust-post-6"
+                             data-tab="osaka">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img06">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx06">
+                                <p class="text-white text-center text-sm font-light">Osaka Card 2</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 3 -->
+                        <div class="lib-list-card library-card hidden"
+                             data-acf="acf-cust-post-7"
+                             data-tab="osaka">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img07">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx07">
+                                <p class="text-white text-center text-sm font-light">Osaka Card 3</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 4 -->
+                        <div class="lib-list-card library-card hidden"
+                             data-acf="acf-cust-post-8"
+                             data-tab="osaka">
+                            <div class="card-image"
+                                 data-acf="acf-custpost-img08">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text"
+                                 data-acf="acf-custpost-tx08">
+                                <p class="text-white text-center text-sm font-light">Osaka Card 4</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mobile Lib-List Section (Node: 158:33) - CSS Grid Layout -->
+        <section class="block tablet:hidden relative w-full bg-figma-black"
+                 data-acf="lib-list-section-mobile">
+            <div class="lib-list-container-mobile">
+                
+                <!-- Header Area Mobile -->
+                <div class="lib-list-header-area-mobile"
+                     data-acf="lib-list-header-mobile">
+                    
+                    <!-- Title Area Mobile -->
+                    <div class="lib-list-title-area-mobile"
+                         data-acf="lib-list-box-ti-mobile">
+                        <div class="h-full flex items-center justify-start">
+                            <div style="width: clamp(90%, 95%, 100%); aspect-ratio: 398/81;">
+                                <img id="lib-list-title-mobile" 
+                                     src="assets/lib-list/lib-list-tokyo.png" 
+                                     alt="Library List Title Mobile" 
+                                     class="w-full h-full object-contain">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Button Area Mobile -->
+                    <div class="lib-list-button-area-mobile"
+                         data-acf="acf-tag-bt-mobile">
+                        <div class="flex items-center justify-center gap-4">
+                            <!-- Tokyo Button Mobile -->
+                            <button id="tag-bt-tokyo-mobile"
+                                    class="library-tab-btn bg-blue-700 text-white px-6 py-2 rounded-full text-base font-thin tracking-wider transition-colors active"
+                                    style="width: 168px; height: 49px;"
+                                    data-acf="tag-bt-tokyo-mobile"
+                                    data-tab="tokyo">
+                                TOKYO
+                            </button>
+                            <!-- Osaka Button Mobile -->
+                            <button id="tag-bt-osaka-mobile"
+                                    class="library-tab-btn bg-transparent border-2 border-blue-700 text-blue-700 px-6 py-2 rounded-full text-base font-thin tracking-wider transition-colors"
+                                    style="width: 168px; height: 49px;"
+                                    data-acf="tag-bt-osaka-mobile"
+                                    data-tab="osaka">
+                                OSAKA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cards Area Mobile -->
+                <div class="lib-list-cards-area-mobile"
+                     data-acf="acf-cust-post-mobile">
+                    <div class="lib-list-cards-grid-mobile">
+                        
+                        <!-- Tokyo Card 1 Mobile -->
+                        <div class="lib-list-card-mobile library-card"
+                             data-acf="acf-cust-post-1-mobile"
+                             data-tab="tokyo">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img01-mobile">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx01-mobile">
+                                <p class="text-white text-center text-xs font-light">Tokyo Card 1</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 2 Mobile -->
+                        <div class="lib-list-card-mobile library-card"
+                             data-acf="acf-cust-post-2-mobile"
+                             data-tab="tokyo">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img02-mobile">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx02-mobile">
+                                <p class="text-white text-center text-xs font-light">Tokyo Card 2</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 3 Mobile -->
+                        <div class="lib-list-card-mobile library-card"
+                             data-acf="acf-cust-post-3-mobile"
+                             data-tab="tokyo">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img03-mobile">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx03-mobile">
+                                <p class="text-white text-center text-xs font-light">Tokyo Card 3</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tokyo Card 4 Mobile -->
+                        <div class="lib-list-card-mobile library-card"
+                             data-acf="acf-cust-post-4-mobile"
+                             data-tab="tokyo">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img04-mobile">
+                                <div class="w-full h-full bg-red-500"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx04-mobile">
+                                <p class="text-white text-center text-xs font-light">Tokyo Card 4</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 1 Mobile -->
+                        <div class="lib-list-card-mobile library-card hidden"
+                             data-acf="acf-cust-post-5-mobile"
+                             data-tab="osaka">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img05-mobile">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx05-mobile">
+                                <p class="text-white text-center text-xs font-light">Osaka Card 1</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 2 Mobile -->
+                        <div class="lib-list-card-mobile library-card hidden"
+                             data-acf="acf-cust-post-6-mobile"
+                             data-tab="osaka">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img06-mobile">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx06-mobile">
+                                <p class="text-white text-center text-xs font-light">Osaka Card 2</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 3 Mobile -->
+                        <div class="lib-list-card-mobile library-card hidden"
+                             data-acf="acf-cust-post-7-mobile"
+                             data-tab="osaka">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img07-mobile">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx07-mobile">
+                                <p class="text-white text-center text-xs font-light">Osaka Card 3</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Osaka Card 4 Mobile -->
+                        <div class="lib-list-card-mobile library-card hidden"
+                             data-acf="acf-cust-post-8-mobile"
+                             data-tab="osaka">
+                            <div class="card-image-mobile"
+                                 data-acf="acf-custpost-img08-mobile">
+                                <div class="w-full h-full bg-blue-700"></div>
+                            </div>
+                            <div class="card-text-mobile"
+                                 data-acf="acf-custpost-tx08-mobile">
+                                <p class="text-white text-center text-xs font-light">Osaka Card 4</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer Section (Desktop: 156:671, Mobile: 158:97) -->
+    <footer class="relative w-full bg-figma-black" style="min-height: 8.208rem;">
+        
+        <!-- Desktop Layout (≥768px) -->
+        <div class="hidden tablet:grid tablet:grid-cols-3 tablet:min-h-full tablet:items-center tablet:px-4">
+            
+            <!-- Left: Footer Logo Area (156:329) -->
+            <div class="flex flex-col items-center justify-center gap-6 p-4" 
+                 data-name="footer-logo">
+                <!-- Logo SVG (156:710) -->
+                <div class="relative" style="width: clamp(8%, 9%, 12%); min-width: 173.01px; height: 34.8px;" 
+                     data-name="footer-logo-ve">
+                    <img src="assets/footer/footer-logo.svg" alt="STEPJAM" 
+                         class="w-full h-full object-contain" />
+                </div>
+                <!-- Copyright Text (156:711) -->
+                <div class="text-center text-white text-sm tracking-wider leading-normal" 
+                     style="font-family: 'Noto Sans JP', sans-serif; font-weight: 100; letter-spacing: 0.7px;" 
+>
+                    <p>© 2025 STEPJAM All Rights Reserved.</p>
+                </div>
+            </div>
+            
+            <!-- Center: Footer Navigation (156:673) -->
+            <div class="flex items-center justify-center p-4" 
+                 data-name="footer-list">
+                <div class="text-center text-white text-base tracking-wider" 
+                     style="font-family: 'Noto Sans JP', sans-serif; font-weight: 100; letter-spacing: 0.8px;" 
+>
+                    <p>
+                        <a href="https://rootz-adl.com/company/" 
+                           target="_blank"
+                           class="text-white hover:text-figma-cyan transition-colors cursor-pointer">
+                            会社概要
+                        </a>
+                        | 
+                        <a href="https://rootz-adl.com/privacy-policy-2/" 
+                           target="_blank"
+                           class="text-white hover:text-figma-cyan transition-colors cursor-pointer">
+                            個人情報の取り扱い
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right: Footer Contact (156:675) -->
+            <div class="flex items-center justify-center p-4 border border-white" 
+                 data-name="footer-contact">
+                <div class="relative w-full h-full">
+                    <img src="assets/footer/footer-contact-image.png" alt="Contact" 
+                         class="w-full h-full object-cover" />
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Mobile Layout (<768px) -->
+        <div class="tablet:hidden grid grid-rows-[repeat(3,minmax(0px,1fr))] min-h-full w-full">
+            
+            <!-- Top: Footer Contact (158:103) - Grid Area 1 -->
+            <div class="[grid-area:1/1] flex items-center justify-center border border-white relative w-full" 
+                 style="height: 131.333px;" 
+                 data-name="footer-contact">
+                <div class="relative overflow-hidden" 
+                     style="width: 527px; height: 238px;">
+                    <img src="assets/footer/footer-contact-image.png" alt="Contact" 
+                         class="absolute bg-center bg-cover bg-no-repeat" 
+                         style="width: 527px; height: 238px; top: calc(50% + 3.333px); left: calc(50% - 0.5px); transform: translate(-50%, -50%);" 
+                         />
+                </div>
+            </div>
+            
+            <!-- Middle: Footer Logo (158:98) - Grid Area 2 -->
+            <div class="[grid-area:2/1] flex flex-col items-center justify-end gap-[25px] relative w-full" 
+                 style="padding-left: 219px; padding-right: 219px;" 
+                 data-name="footer-logo">
+                <!-- Logo SVG (158:99) -->
+                <div class="relative" style="width: 173.01px; height: 34.8px;" 
+                     data-name="footer-logo-ve">
+                    <img src="assets/footer/footer-logo.svg" alt="STEPJAM" 
+                         class="w-full h-full object-contain block max-w-none" />
+                </div>
+                <!-- Copyright Text (158:100) -->
+                <div class="text-center text-white text-sm leading-normal w-full flex flex-col justify-center" 
+                     style="font-family: 'Noto Sans JP:Thin', sans-serif; font-weight: 100; letter-spacing: 0.7px; font-size: 14px; height: 23px;" 
+>
+                    <p class="block leading-normal">© 2025 STEPJAM All Rights Reserved.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom: Footer Navigation (158:101) - Grid Area 3 -->
+            <div class="[grid-area:3/1] flex items-center justify-center relative w-full" 
+                 data-name="footer-list">
+                <div class="flex items-center justify-center"
+                     style="padding-left: 50px; padding-right: 50px;">
+                    <div class="text-center text-white text-base text-nowrap" 
+                         style="font-family: 'Noto Sans JP:Thin', sans-serif; font-weight: 100; letter-spacing: 0.8px; font-size: 16px;" 
+>
+                        <p class="block leading-normal whitespace-pre">会社概要| 個人情報の取り扱い</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </footer>
+    
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+
+        // Swiper.js initialization - Updated Configuration
+        document.addEventListener('DOMContentLoaded', function () {
+            // Common Swiper Settings
+            const commonSettings = {
+                allowTouchMove: false,
+                simulateTouch: false,
+                slidesPerView: 'auto',
+            };
+            
+            const mainSliderCommon = {
+                ...commonSettings,
+                rewind: true,
+                speed: 1000,
+                effect: 'slide',
+                centeredSlides: true,
+                initialSlide: 1,
+                grabCursor: false,
+                watchOverflow: false,
+            };
+            
+            const logoSliderCommon = {
+                ...commonSettings,
+                speed: 15000,
+                freeMode: {
+                    enabled: true,
+                    momentum: false,
+                },
+            };
+
+            // Desktop Main Slider
+            const mainSliderDesktop = new Swiper('.main-slider-desktop', {
+                ...mainSliderCommon,
+                loop: false,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                spaceBetween: 20,
+            });
+
+            // Mobile Main Slider
+            const mainSliderMobile = new Swiper('.main-slider-mobile', {
+                ...mainSliderCommon,
+                loop: false,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                spaceBetween: '4.17%',
+            });
+
+            // Desktop Logo Slider
+            const logoSliderDesktop = new Swiper('.logo-slider-desktop', {
+                ...logoSliderCommon,
+                loop: true,
+                autoplay: {
+                    delay: 0,
+                    disableOnInteraction: false,
+                    reverseDirection: false,
+                },
+                spaceBetween: '1.41%',
+            });
+
+            // Mobile Logo Slider
+            const logoSliderMobile = new Swiper('.logo-slider-mobile', {
+                ...logoSliderCommon,
+                loop: true,
+                autoplay: {
+                    delay: 0,
+                    disableOnInteraction: false,
+                    reverseDirection: false,
+                },
+                spaceBetween: '3.52%',
+            });
+        });
+    </script>
+    
+    </div> <!-- /.site-responsive-wrapper -->
+    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

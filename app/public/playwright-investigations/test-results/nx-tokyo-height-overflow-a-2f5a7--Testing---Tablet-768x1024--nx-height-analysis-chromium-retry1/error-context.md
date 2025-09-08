@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - button "メニュー開閉" [ref=e5] [cursor=pointer]:
+        - img "Navigation" [ref=e6] [cursor=pointer]
+      - link "STEPJAM" [ref=e8] [cursor=pointer]:
+        - /url: http://stepjam.local/
+        - img "STEPJAM" [ref=e9] [cursor=pointer]
+  - generic [ref=e11]:
+    - region "ビジュアルエリア" [ref=e12]:
+      - link "チケット購入" [ref=e16] [cursor=pointer]:
+        - /url: https://www.google.com/?client=safari
+        - img "ticket" [ref=e17] [cursor=pointer]
+    - region "コンテンツエリア" [ref=e18]:
+      - heading "STEPJAM TOKYO 2025 SUMMER" [level=1] [ref=e20]:
+        - text: STEPJAM TOKYO
+        - text: 2025 SUMMER
+      - generic "コンテンツエリア" [ref=e21]:
+        - article [ref=e22]:
+          - heading "acf-タイトル イベント概要情報について" [level=3] [ref=e24]
+          - paragraph [ref=e26]: acf-内容 こちらはSTEPJAM TOKYO 2025 SUMMERイベントの詳細情報をお知らせいたします。今年の夏、東京で開催される最大級のダンスイベントです。国内外から一流のダンサーが集結し、熱いパフォーマンスをお届けします。チケット情報や出演者情報など、詳しくは公式サイトをご確認ください。
+        - article [ref=e27]:
+          - heading "time" [level=3] [ref=e29]
+          - paragraph [ref=e31]: acf-内容 こちらはSTEPJAM TOKYO 2025 SUMMERイベントの詳細情報をお知らせいたします。今年の夏、東京で開催される最大級のダンスイベントです。国内外から一流のダンサーが集結し、熱いパフォーマンスをお届けします。チケット情報や出演者情報など、詳しくは公式サイトをご確認ください。
+        - article [ref=e32]:
+          - heading "Date" [level=3] [ref=e34]
+          - paragraph [ref=e36]: acf-内容 こちらはSTEPJAM TOKYO 2025 SUMMERイベントの詳細情報をお知らせいたします。今年の夏、東京で開催される最大級のダンスイベントです。国内外から一流のダンサーが集結し、熱いパフォーマンスをお届けします。チケット情報や出演者情報など、詳しくは公式サイトをご確認ください。
+        - article [ref=e37]:
+          - heading "acf-タイトル 出演者情報とスケジュール" [level=3] [ref=e39]
+          - paragraph [ref=e41]: acf-内容 世界各地から集結するトップダンサーたちによる圧巻のパフォーマンスをお楽しみください。DAY1は東京エリア、DAY2は関西エリアの豪華ラインナップでお送りします。各日のタイムテーブルや出演者の詳細情報については、専用ページでご確認いただけます。
+  - contentinfo [ref=e42]:
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - img "STEPJAM" [ref=e46]
+        - paragraph [ref=e48]: © 2025 STEPJAM. All rights reserved.
+      - paragraph [ref=e51]:
+        - link "会社概要" [ref=e52] [cursor=pointer]:
+          - /url: https://rootz-adl.com/company/
+        - generic [ref=e53]: "|"
+        - link "個人情報の取り扱い" [ref=e54] [cursor=pointer]:
+          - /url: "#"
+      - img "Contact" [ref=e57]
+```

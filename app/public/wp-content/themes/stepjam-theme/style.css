@@ -1,0 +1,17 @@
+/*
+Theme Name: STEPJAM Theme
+Theme URI: https://stepjam.local
+Description: STEPJAMre公式サイト専用WordPressテーマ。レスポンシブデザイン対応、カスタムフィールド統合。
+Author: STEPJAM Team
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 8.0
+License: Private
+Text Domain: stepjam-theme
+*/
+
+/* 
+ * このファイルはWordPressテーマ認識のためのヘッダー情報のみを含みます
+ * 実際のスタイルはassets/css/内のファイルから読み込まれます
+ */

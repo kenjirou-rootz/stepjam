@@ -1,0 +1,18 @@
+{
+  "name": "stepjam-nx-height-analysis",
+  "version": "1.0.0",
+  "description": "Ultra Think analysis for NX Tokyo height overflow investigation",
+  "main": "nx-tokyo-height-overflow-analysis.js",
+  "scripts": {
+    "test": "playwright test nx-tokyo-height-overflow-analysis.js",
+    "test:headed": "playwright test nx-tokyo-height-overflow-analysis.js --headed",
+    "test:debug": "playwright test nx-tokyo-height-overflow-analysis.js --debug",
+    "install-playwright": "playwright install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "keywords": ["stepjam", "nx-tokyo", "height-analysis", "overflow-detection", "ultra-think"],
+  "author": "STEPJAM Development Team",
+  "license": "MIT"
+}

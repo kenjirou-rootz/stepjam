@@ -1,0 +1,35 @@
+# rsync除外リスト
+
+# キャッシュ
+cache/
+*-cache/
+*.cache
+
+# 一時ファイル
+*.tmp
+*.temp
+*.swp
+.DS_Store
+Thumbs.db
+
+# バックアップ
+*.backup
+*.bak
+*_backup_*
+backups/
+
+# ログ
+*.log
+debug.log
+error_log
+
+# セキュリティ
+.htaccess
+.htpasswd
+wp-config.php
+
+# 大容量ファイル
+*.zip
+*.tar.gz
+*.mp4
+*.mov

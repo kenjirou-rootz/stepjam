@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEPJAM Responsive Test</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        
+        /* 現在の問題のあるCSS */
+        .test-current {
+            display: flex;
+            background: #000;
+            min-height: 50vh;
+            margin-bottom: 20px;
+        }
+        
+        .day-container {
+            flex: 0 0 50vw;
+            width: 50vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            border: 2px solid #ff0000;
+        }
+        
+        .day1 { background: #333; }
+        .day2 { background: #0000ff; }
+        
+        /* 問題のあるメディアクエリ（767px以下） */
+        @media (max-width: 767px) {
+            .test-current {
+                flex-direction: column;
+            }
+            .day-container {
+                width: 100vw !important;
+                flex: 0 0 auto;
+            }
+        }
+        
+        /* 修正版CSS */
+        .test-fixed {
+            display: flex;
+            background: #000;
+            min-height: 50vh;
+            margin-bottom: 20px;
+        }
+        
+        .test-fixed .day-container {
+            flex: 0 0 50vw;
+            width: 50vw;
+            border-color: #00ff00;
+        }
+        
+        /* 修正版メディアクエリ（768px以下） */
+        @media (max-width: 768px) {
+            .test-fixed {
+                flex-direction: column;
+            }
+            .test-fixed .day-container {
+                width: 100vw !important;
+                flex: 0 0 auto;
+            }
+        }
+        
+        .header {
+            background: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .size-indicator {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="size-indicator" id="sizeIndicator"></div>
+    
+    <div class="header">現在の問題のあるレイアウト（767px以下で縦積み）</div>
+    <div class="test-current">
+        <div class="day-container day1">DAY1</div>
+        <div class="day-container day2">DAY2</div>
+    </div>
+    
+    <div class="header">修正版レイアウト（768px以下で縦積み）</div>
+    <div class="test-fixed">
+        <div class="day-container day1">DAY1</div>
+        <div class="day-container day2">DAY2</div>
+    </div>
+    
+    <script>
+        function updateSizeIndicator() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const indicator = document.getElementById('sizeIndicator');
+            
+            let status = '';
+            if (width <= 375) status = 'Mobile (375px)';
+            else if (width <= 767) status = 'Mobile (767px)';
+            else if (width <= 768) status = 'Tablet (768px)';
+            else if (width >= 1920) status = 'Desktop (1920px)';
+            else status = 'Desktop';
+            
+            indicator.textContent = `${width}x${height} - ${status}`;
+        }
+        
+        window.addEventListener('resize', updateSizeIndicator);
+        updateSizeIndicator();
+    </script>
+</body>
+</html>

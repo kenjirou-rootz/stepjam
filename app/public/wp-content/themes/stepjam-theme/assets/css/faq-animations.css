@@ -1,0 +1,407 @@
+/**
+ * FAQ Accordion Modern Animations
+ * 
+ * Advanced CSS animations for FAQ accordion with smooth transitions,
+ * micro-interactions, and modern UI patterns
+ * 
+ * @package STEPJAM_Theme
+ * @version 1.0.0
+ */
+
+/* ============================================
+   Core Animation Variables & Settings
+   ============================================ */
+
+:root {
+    --faq-animation-duration: 400ms;
+    --faq-animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+    --faq-animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --faq-stagger-delay: 50ms;
+    --faq-hover-scale: 1.02;
+    --faq-focus-glow: 0 0 0 3px rgba(0, 247, 255, 0.3);
+}
+
+/* ============================================
+   FAQ Container Animations
+   ============================================ */
+
+/* Staggered entrance animation for FAQ items */
+.faq-container {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: faqContainerFadeIn 600ms var(--faq-animation-easing) forwards;
+}
+
+@keyframes faqContainerFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Individual FAQ item staggered animation */
+.faq-accordion-item {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: faqItemSlideIn var(--faq-animation-duration) var(--faq-animation-easing) forwards;
+}
+
+.faq-accordion-item:nth-child(1) { animation-delay: 100ms; }
+.faq-accordion-item:nth-child(2) { animation-delay: 150ms; }
+.faq-accordion-item:nth-child(3) { animation-delay: 200ms; }
+.faq-accordion-item:nth-child(4) { animation-delay: 250ms; }
+.faq-accordion-item:nth-child(5) { animation-delay: 300ms; }
+.faq-accordion-item:nth-child(6) { animation-delay: 350ms; }
+.faq-accordion-item:nth-child(7) { animation-delay: 400ms; }
+.faq-accordion-item:nth-child(8) { animation-delay: 450ms; }
+.faq-accordion-item:nth-child(n+9) { animation-delay: 500ms; }
+
+@keyframes faqItemSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Question Button Advanced Interactions
+   ============================================ */
+
+.faq-question-button {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--faq-animation-duration) var(--faq-animation-easing);
+    transform-origin: center;
+    will-change: transform, background-color, box-shadow;
+}
+
+/* Hover state with subtle scale and glow */
+.faq-question-button:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(0,247,255,0.05) 100%);
+    box-shadow: 0 4px 20px rgba(0, 247, 255, 0.1);
+}
+
+/* Focus state accessibility */
+.faq-question-button:focus {
+    outline: none;
+    box-shadow: var(--faq-focus-glow);
+}
+
+/* Active state micro-interaction */
+.faq-question-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Ripple effect on click */
+.faq-question-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 247, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 400ms ease-out, height 400ms ease-out;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.faq-question-button.ripple-active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Ensure content stays above ripple */
+.faq-question-button > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   Question Text Advanced Typography
+   ============================================ */
+
+.faq-question-text h3 {
+    transition: all 300ms var(--faq-animation-easing);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.faq-question-button:hover .faq-question-text h3 {
+    background: linear-gradient(135deg, #00f7ff 0%, #ffffff 50%, #00f7ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: faqTextShimmer 2s ease-in-out infinite;
+}
+
+@keyframes faqTextShimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ============================================
+   Icon Advanced Animations
+   ============================================ */
+
+.faq-toggle-icon {
+    transition: all var(--faq-animation-duration) var(--faq-animation-easing-bounce);
+    transform-origin: center;
+}
+
+.faq-question-button:hover .faq-toggle-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Plus icon animations */
+.faq-icon-plus {
+    transition: all var(--faq-animation-duration) var(--faq-animation-easing);
+    transform-origin: center;
+}
+
+/* Minus icon animations */
+.faq-icon-minus {
+    transition: all var(--faq-animation-duration) var(--faq-animation-easing);
+    transform-origin: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Enhanced icon states */
+.faq-accordion-item[data-expanded="true"] .faq-icon-plus {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.5);
+}
+
+.faq-accordion-item[data-expanded="true"] .faq-icon-minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.faq-accordion-item[data-expanded="false"] .faq-icon-plus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.faq-accordion-item[data-expanded="false"] .faq-icon-minus {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+}
+
+/* ============================================
+   Answer Container Advanced Animations
+   ============================================ */
+
+.faq-answer-container {
+    transition: all var(--faq-animation-duration) var(--faq-animation-easing);
+    transform-origin: top;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Collapsed state */
+.faq-answer-container[data-state="collapsed"] {
+    height: 0 !important;
+    opacity: 0;
+    transform: scaleY(0.95) translateY(-10px);
+    visibility: hidden;
+}
+
+/* Expanding state */
+.faq-answer-container[data-state="expanding"] {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    visibility: visible;
+    /* Height is set dynamically by JavaScript */
+}
+
+/* Expanded state */
+.faq-answer-container[data-state="expanded"] {
+    height: auto !important;
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    visibility: visible;
+}
+
+/* Collapsing state */
+.faq-answer-container[data-state="collapsing"] {
+    opacity: 0;
+    transform: scaleY(0.95) translateY(-10px);
+    visibility: visible;
+    /* Height transitions to 0 */
+}
+
+/* ============================================
+   Answer Content Typography & Effects
+   ============================================ */
+
+.faq-answer-content {
+    transition: all calc(var(--faq-animation-duration) + 100ms) ease-out;
+    transform: translateY(0);
+}
+
+.faq-answer-container[data-state="collapsed"] .faq-answer-content,
+.faq-answer-container[data-state="collapsing"] .faq-answer-content {
+    transform: translateY(-20px);
+    opacity: 0.5;
+}
+
+.faq-answer-container[data-state="expanding"] .faq-answer-content,
+.faq-answer-container[data-state="expanded"] .faq-answer-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Content text effects */
+.faq-answer-text {
+    line-height: 1.7;
+    transition: color 300ms ease;
+}
+
+.faq-answer-text p {
+    margin-bottom: 1em;
+    transition: transform 200ms ease;
+}
+
+.faq-answer-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Content hover effects */
+.faq-accordion-item:hover .faq-answer-text {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ============================================
+   Border & Divider Animations
+   ============================================ */
+
+.faq-accordion-item {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color var(--faq-animation-duration) ease;
+}
+
+.faq-accordion-item::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00f7ff, transparent);
+    transition: width var(--faq-animation-duration) var(--faq-animation-easing);
+}
+
+.faq-accordion-item:hover::after {
+    width: 100%;
+}
+
+.faq-accordion-item[data-expanded="true"]::after {
+    width: 100%;
+    background: linear-gradient(90deg, #00f7ff, #00f7ff, #00f7ff);
+}
+
+/* ============================================
+   Responsive Animation Adjustments
+   ============================================ */
+
+@media (max-width: 767px) {
+    :root {
+        --faq-animation-duration: 350ms;
+        --faq-hover-scale: 1.01;
+    }
+    
+    .faq-question-button:hover {
+        transform: none; /* Disable hover transform on mobile */
+        background: rgba(255,255,255,0.05);
+        box-shadow: none;
+    }
+    
+    .faq-question-button:active {
+        transform: scale(0.99);
+        background: rgba(0, 247, 255, 0.1);
+    }
+}
+
+/* ============================================
+   Accessibility & Motion Preferences
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --faq-animation-duration: 200ms;
+        --faq-stagger-delay: 25ms;
+    }
+    
+    .faq-question-button:hover {
+        transform: none;
+    }
+    
+    .faq-toggle-icon {
+        transition: opacity 200ms ease;
+    }
+    
+    @keyframes faqTextShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 0% 50%; }
+    }
+}
+
+/* ============================================
+   Performance Optimizations
+   ============================================ */
+
+.faq-accordion-item {
+    contain: layout style paint;
+}
+
+.faq-answer-container {
+    will-change: height, opacity, transform;
+}
+
+.faq-question-button {
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.faq-toggle-icon {
+    backface-visibility: hidden;
+}
+
+/* ============================================
+   Loading States
+   ============================================ */
+
+.faq-loading .faq-accordion-item {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.faq-loading .faq-accordion-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 247, 255, 0.1), transparent);
+    animation: faqShimmer 1.5s infinite;
+    z-index: 1;
+}
+
+@keyframes faqShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}

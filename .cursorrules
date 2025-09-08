@@ -1,0 +1,104 @@
+# StageWise v2.0 Integration Rules for STEPJAM Project
+
+## Project Context
+- WordPress-based dance competition website (STEPJAM)
+- Technology: PHP, JavaScript (ES6), Tailwind CSS, ACF
+- Local development: http://localhost:10004/
+
+## StageWise Integration Protocol
+
+### 1. Request Detection
+When receiving requests from StageWise WebUI, apply these specialized rules:
+- Detect StageWise context from project path or explicit mention
+- Process requests using DOM analysis and improvement workflow
+- Provide structured responses for WebUI display
+
+### 2. DOM Element Analysis Framework
+For any UI/UX improvement requests:
+
+**Element Identification:**
+- Extract selector path (CSS/XPath)
+- Identify HTML tag name and attributes  
+- Capture text content and context
+- Note CSS classes and styling
+
+**Analysis Dimensions:**
+- **Usability**: User interaction patterns, navigation flow
+- **Accessibility**: WCAG compliance, screen reader support, keyboard navigation
+- **Performance**: Loading speed, rendering efficiency
+- **Visual Design**: Layout, typography, color contrast
+- **Responsive**: Mobile/desktop compatibility
+
+### 3. Improvement Response Format
+
+Structure all StageWise responses as follows:
+
+```
+🎯 **要素分析**
+- 対象: [要素セレクタ]
+- 種類: [HTML要素タイプ]
+- 現状: [現在の状態・問題]
+
+🔍 **問題特定**
+- [問題点1の詳細説明]
+- [問題点2の詳細説明]
+- [優先度と影響範囲]
+
+💡 **改善提案**
+1. [具体的改善案1]
+   - 実装方法: [技術的手順]
+   - 効果: [期待される改善効果]
+   
+2. [具体的改善案2]  
+   - 実装方法: [技術的手順]
+   - 効果: [期待される改善効果]
+
+⚡ **実装例**
+[実際のコードサンプル - HTML/CSS/JavaScript]
+
+🧪 **検証方法**
+- [テスト手順]
+- [確認ポイント]
+```
+
+### 4. STEPJAM Specific Guidelines
+
+**WordPress Integration:**
+- Consider ACF field structures and custom post types
+- Maintain theme compatibility with stepjam-theme
+- Respect existing JavaScript architecture (STEPJAMreApp class)
+
+**CSS Framework:**
+- Prioritize Tailwind CSS utilities
+- Maintain responsive design (768px breakpoint)
+- Follow BEM naming for custom classes
+
+**Accessibility Focus:**
+- Japanese language support (UTF-8)
+- Screen reader compatibility
+- Keyboard navigation support
+- ARIA attributes implementation
+
+**Performance Considerations:**
+- Lazy loading for images
+- WordPress optimization best practices
+- Minimal JavaScript footprint
+
+### 5. Response Language
+- Provide responses in Japanese for user-facing content
+- Use technical English for code comments
+- Maintain professional, helpful tone
+- Include specific implementation steps
+
+### 6. Quality Assurance
+Before providing responses:
+- Verify suggestions align with WordPress best practices
+- Ensure compatibility with existing STEPJAM codebase
+- Consider mobile-first responsive design
+- Validate accessibility improvements
+
+## Integration Success Metrics
+- Clear problem identification
+- Actionable improvement suggestions  
+- Code examples that work with STEPJAM architecture
+- Natural language explanations suitable for non-technical users

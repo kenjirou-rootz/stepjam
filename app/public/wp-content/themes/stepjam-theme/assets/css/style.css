@@ -1,0 +1,2638 @@
+
+/* ========= フォント読み込み（Google Fonts CDN） ========= */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+
+/* ========================================
+   CSS VARIABLES - レスポンシブガイド統一
+   ======================================== */
+
+:root {
+    /* Grid Layout Variables */
+    --grid-columns-45-55: 45% 55%;
+    --grid-columns-60-40: 60% 40%;
+    --grid-columns-30-70: 30% 70%;
+    
+    /* Spacing Variables */
+    --gap-standard: 2rem;
+    --gap-large: 3rem;
+    --padding-standard: 1rem;
+    --padding-large: 2.5rem;
+    
+    /* Border Radius Variables */
+    --border-radius-video: 50px;
+    --border-radius-mobile: 25px;
+    --border-radius-standard: 20px;
+    --border-radius-small: 15px;
+    --border-radius-tiny: 10px;
+    
+    /* Font Variables - レスポンシブガイド準拠 */
+    --font-size-responsive: clamp(0.75rem, 1vw, 1rem);
+    --line-height-standard: 1.375;
+    --letter-spacing-standard: 0.05em;
+    
+    /* Toroku Dancer Layout Variables - figma基準 */
+    --name-box-width: 778px;
+    --profile-content-width: 849px;
+    --gap-main: 107px;
+    --gap-figma: 50px;
+    
+    /* Figma Transform Variables - desk-lib-sigle準拠 */
+    --transform-inner-width: 1200;
+    --transform-inner-height: 675;
+    --figma-aspect-ratio: calc(915 / 515); /* horizontal aspect ratio */
+    --figma-aspect-width: 915;
+    --figma-aspect-height: 515;
+    --figma-container-basis: 0; /* basis-0 flex grow */
+    
+    /* Figma Rotation Variables - バランスアプローチ統合 */
+    --rotation-angle: -90deg; /* Figma準拠の回転角度 */
+    --rotation-container-width: 1297px; /* 回転コンテナ基準幅 */
+    --rotation-container-height: 914.984px; /* 回転コンテナ基準高 */
+    
+    /* Figma Performance Section Variables */
+    --performance-title-width: 89.984px;
+    --performance-video-width: 462px;
+    --performance-video-area-width: 1296px;
+    --performance-video-height: 462px;
+    --performance-gap: 50px;
+    
+    /* Figma Profile Section Variables */
+    --profile-section-width: 363px;
+    --profile-title-height: 98px;
+    --profile-content-gap: 10px;
+    --profile-sns-padding: 30px;
+    
+    /* 100vh Grid Variables - single-toroku-dancer専用 */
+    --viewport-height-base: 100vh;
+    --header-height: 165px; /* headerエリア固定高 */
+    --main-content-height: calc(100vh - 165px); /* メインコンテンツエリア */
+    
+    /* Z-Index Management Variables - レイヤー管理システム */
+    /* Base Layer (0-99) */
+    --z-base: 0;
+    --z-main-content: 1;
+    --z-sidebar: 10;
+    
+    /* Content Layer (100-999) */
+    --z-header: 50;
+    --z-footer: 50;
+    --z-content-overlay: 100;
+    
+    /* Navigation Layer (1000-9999) */
+    --z-fixed-header: 1000;
+    --z-dropdown-menu: 2000;
+    --z-mobile-menu: 3000;
+    
+    /* Overlay Layer (10000+) */
+    --z-navigation-overlay: 10000;
+    --z-modal: 10001;
+    --z-tooltip: 10002;
+    --z-notification: 10003;
+}
+
+/* ========================================
+   スクロールバー二重問題修正（A案：HTMLレベル制御統一）
+   ======================================== */
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    overflow: visible;
+}
+
+/* Webkit系ブラウザでのスクロールバー二重表示解決 */
+html::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* 全ブラウザ対応スクロールバー非表示設定 */
+html {
+    scrollbar-width: none; /* Firefox用 */
+    -ms-overflow-style: none; /* IE/Edge用 */
+}
+
+/* ========================================
+   登録ダンサー詳細ページ専用変数
+   ======================================== */
+   :root {
+    /* Colors */
+    --dancer-bg-black: #000000;
+    --dancer-text-white: #ffffff;
+    --dancer-blue: #3a44ff;
+    --dancer-red: #ff0000;
+    
+    /* Layout */
+    --dancer-desktop-left: 30%;
+    --dancer-desktop-right: 70%;
+    
+    /* Spacing */
+    --dancer-padding: 40px;
+    --dancer-gap: 30px;
+    
+    /* Border Radius */
+    --dancer-video-radius: 30px;
+    --dancer-mobile-radius: 20px;
+   }
+
+/* ========================================
+   INFO & NEWS 詳細ページ専用変数
+   ======================================== */
+   :root {
+    /* Colors */
+    --info-news-bg-black: #000000;
+    --info-news-text-white: #ffffff;
+    --info-news-accent-blue: #3a44ff;
+    --info-news-category-bg: #ff0000;
+    
+    /* Layout */
+    --info-news-desktop-left: 50%;
+    --info-news-desktop-right: 50%;
+    --info-news-container-max-width: 1400px;
+    
+    /* Spacing */
+    --info-news-padding: 60px;
+    --info-news-gap: 40px;
+    --info-news-mobile-padding: 20px;
+    
+    /* Typography */
+    --info-news-title-size-desktop: clamp(32px, 3.5vw, 48px);
+    --info-news-title-size-mobile: clamp(24px, 6vw, 36px);
+    --info-news-content-size: 14px;
+    --info-news-date-size: clamp(12px, 1vw, 14px);
+    
+    /* Border Radius */
+    --info-news-image-radius: 20px;
+    --info-news-button-radius: 50px;
+    --info-news-category-radius: 15px;
+   }
+
+/* ========================================
+   BASIC SETUP - Tailwind主体、補助的カスタムCSS
+======================================== */
+
+/* 基本表示制御クラス - Tailwind互換 */
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+/* ========================================
+   STEPJAMRE ROOT CONTAINER
+======================================== */
+
+.stepjamre-root {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ========================================
+   WHSJ SECTION - COMPLEX GRID LAYOUT
+======================================== */
+
+/* Desktop WHSJ Section Grid Layout - HTML基準3列2行構造 */
+.whsj-section-container {
+    display: grid;
+    grid-template-columns: 55% 30% 15%;  /* HTML基準パーセンテージ指定で比率保持 */
+    grid-template-rows: 7fr 3fr;         /* HTML基準 70% : 30% */
+    grid-template-areas:
+        "video-area    content-area  sono-area"
+        "vector-area   content-area  sono-area";
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 動的高さ：幅に応じて自動調整 */
+}
+
+/* Video Area (Left Top) - HTML基準 */
+.whsj-video-area {
+    grid-area: video-area;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Vector Area (Left Bottom) - HTML基準 */
+.whsj-vector-area {
+    grid-area: vector-area;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Content Area (Center) - HTML基準 */
+.whsj-content-area {
+    grid-area: content-area;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 5rem;
+    gap: 1rem;
+}
+
+/* Sono Area (Right) - HTML基準 */
+.whsj-sono-area {
+    grid-area: sono-area;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile WHSJ Section - Positioned Layout */
+@media (max-width: 767px) {
+    .whsj-section-container {
+        display: block;
+        position: relative;
+        aspect-ratio: 9 / 16; /* モバイル用縦長比率：動的高さ */
+    }
+    
+    .whsj-video-area,
+    .whsj-vector-area,
+    .whsj-content-area,
+    .whsj-sono-area {
+        position: absolute;
+    }
+    
+    .whsj-video-area {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60%;
+    }
+    
+    .whsj-content-area {
+        top: 60%;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        padding: 1rem;
+    }
+    
+    .whsj-vector-area {
+        top: clamp(500px, 70%, 650px);
+        left: 0;
+        width: 75%;
+        height: clamp(150px, 20%, 200px);
+        z-index: 5;
+    }
+    
+    .whsj-sono-area {
+        display: none; /* Hide on mobile for simplicity */
+    }
+}
+
+/* ========================================
+   LIBRARY TOP SECTION - RESPONSIVE GRID
+======================================== */
+
+/* Desktop Library Top Section - HTML基準 */
+.lib-top-container {
+    display: grid;
+    grid-template-columns: 50% 6.7% 43.3%;  /* HTML基準：左右対称・中央区切り */
+    grid-template-areas: "tokyo-area center-divider osaka-area";
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Desktop Grid Areas - HTML基準クラス名統一 */
+.lib-tokyo-area {
+    grid-area: tokyo-area;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lib-center-divider {
+    grid-area: center-divider;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lib-osaka-area {
+    grid-area: osaka-area;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Osaka SVG size adjustment to match Tokyo */
+.lib-osaka-area img[alt="Osaka Library Content"] {
+    transform: scale(1.155); /* 752.47 / 651.63 = 1.155 */
+}
+
+/* Mobile Library Top Section - HTML基準 */
+.lib-top-container-mobile {
+    display: grid;
+    grid-template-columns: 48.8% 9.9% 41.3%;  /* HTML基準：モバイル比率調整 */
+    grid-template-areas: "tokyo-mobile center-mobile osaka-mobile";
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Mobile Grid Areas - HTML基準 */
+.lib-tokyo-area-mobile {
+    grid-area: tokyo-mobile;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lib-center-divider-mobile {
+    grid-area: center-mobile;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lib-osaka-area-mobile {
+    grid-area: osaka-mobile;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile Osaka SVG size adjustment - match Tokyo mobile size */
+.lib-osaka-area-mobile img[alt="Osaka Library Content Mobile"] {
+    transform: scale(1.24); /* 146 / 118 (original osaka size) = 1.24 */
+}
+
+@media (max-width: 767px) {
+    .lib-top-container {
+        display: none;
+    }
+}
+
+/* ========================================
+   LIBRARY LIST SECTION - HTML基準完全実装
+======================================== */
+
+/* Desktop Lib-List Container - HTML基準 */
+.lib-list-container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header-area"
+        "cards-area";
+    height: 100%;
+    max-width: min(1200px, 90%);
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Desktop Header Area - HTML基準 */
+.lib-list-header-area {
+    grid-area: header-area;
+    display: grid;
+    grid-template-rows: 48.7% 51.3%;  /* 109px : 115px の比率 - HTML基準 */
+    height: 100%;
+}
+
+.lib-list-title-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem 0;
+}
+
+.lib-list-button-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* Desktop Cards Area - 参考デザイン準拠 */
+.lib-list-cards-area {
+    grid-area: cards-area;
+    height: 100%;
+    padding: 2rem 0;
+}
+
+.lib-list-cards-grid {
+    display: flex;
+    gap: clamp(1rem, 2.5%, 2rem);
+    height: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.lib-list-card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    width: 280px;
+    max-width: 280px;
+    min-width: 180px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.lib-list-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    aspect-ratio: 9/16; /* 9:16の縦長比率 */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-text {
+    text-align: center;
+}
+
+.card-text .dancer-name {
+    color: #ffffff;
+    font-size: clamp(14px, 1.2vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+}
+
+/* Mobile Lib-List Container - HTML基準 */
+.lib-list-container-mobile {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header-area-mobile"
+        "cards-area-mobile";
+    height: 100%;
+    max-width: min(600px, 90%);
+    margin: 0 auto;
+    position: relative;
+    padding: 60px 0;
+}
+
+/* Mobile Header Area - HTML基準 */
+.lib-list-header-area-mobile {
+    grid-area: header-area-mobile;
+    display: grid;
+    grid-template-rows: 48.7% 51.3%;  /* 109px : 115px の比率 - HTML基準 */
+    height: 100%;
+}
+
+.lib-list-title-area-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem 0;
+}
+
+.lib-list-button-area-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* Mobile Cards Area - HTML基準 */
+.lib-list-cards-area-mobile {
+    grid-area: cards-area-mobile;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.lib-list-cards-grid-mobile {
+    display: flex;
+    gap: clamp(0.5rem, 1.3%, 1rem);
+    height: 100%;
+    padding: 0 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* ========================================
+   未定義クラス追加 - HTML基準見栄え再現
+======================================== */
+
+/* Library Tab Buttons - 参考デザイン準拠 */
+.library-tab-btn {
+    background-color: transparent;
+    border: 2px solid #3a44ff; /* デザイン準拠の青色 */
+    color: #ffffff;
+    padding: 12px 32px;
+    border-radius: 50px; /* 参考デザインの丸いボタン形状 */
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* TOKYO ボタン - アクティブ状態（青塗りつぶし） */
+.library-tab-btn.tokyo-active {
+    background-color: #3a44ff;
+    border-color: #3a44ff;
+    color: #ffffff;
+}
+
+/* OSAKA ボタン - 非アクティブ状態（青線のみ） */
+.library-tab-btn.osaka-inactive {
+    background-color: transparent;
+    border-color: #3a44ff;
+    color: #ffffff;
+}
+
+/* ホバー効果 */
+.library-tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(58, 68, 255, 0.3);
+}
+
+/* Library Title Images - HTML基準 */
+.lib-title-image {
+    width: 100%;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.lib-title-image img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+.lib-title-image.hidden {
+    display: none;
+}
+
+/* Dancers Grid - 参考デザイン準拠 4カード横並び */
+.dancers-grid {
+    display: flex;
+    gap: clamp(1rem, 2.5%, 2rem);
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+@media (max-width: 767px) {
+    .dancers-grid {
+        gap: clamp(0.3rem, 1%, 0.5rem);
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .lib-list-card {
+        flex: 0 0 auto;
+        width: min(180px, 45vw);
+        max-width: 180px;
+        min-width: 120px;
+    }
+}
+
+/* Dancer Card - HTML基準 */
+.dancer-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.dancer-card:hover {
+    transform: scale(1.05);
+}
+
+.dancer-image {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+
+.dancer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dancer-info {
+    padding: 1rem;
+    text-align: center;
+}
+
+.dancer-name {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.dancer-profile {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES
+======================================== */
+
+/* Ensure grid layouts work across screen sizes */
+@media (min-width: 768px) {
+    .tablet\:block {
+        display: block !important;
+    }
+    
+    .hidden.tablet\:block {
+        display: block !important;
+    }
+}
+
+/* ========================================
+   WHSJ TEXT RESPONSIVE FONT SIZE - HTML基準
+======================================== */
+
+.whsj-text-responsive {
+    font-size: clamp(0.75rem, 2vw, 1rem); /* Mobile: 12-16px - HTML基準 */
+}
+
+@media (min-width: 768px) {
+    .whsj-text-responsive {
+        font-size: 0.875rem; /* Desktop: 14px - HTML基準 */
+    }
+}
+
+/* ========================================
+   FIGMA RESPONSIVE ASPECT RATIOS
+   ======================================== */
+
+/* Mobile-first: 9:16 aspect ratio for image containers */
+[data-name="lib-siglen_acf-dancer-img"] {
+    aspect-ratio: 9/16;
+}
+
+/* Desktop: Use Figma aspect ratio (915:515) */
+@media (min-width: 768px) {
+    [data-name="lib-siglen_acf-dancer-img"] {
+        aspect-ratio: var(--figma-aspect-width) / var(--figma-aspect-height);
+    }
+}
+
+/* ========================================
+   SPONSOR SECTION - RESPONSIVE GRID LAYOUT
+   ======================================== */
+
+/* CSS Variables with Fallbacks - Future Browser Compatibility */
+:root {
+    --sponsor-section-height: 67.5rem; /* 1080px */
+    --sponsor-main-height: 62%; /* 670px ratio */
+    --sponsor-content-height: 38%; /* 410px ratio */
+    --sponsor-left-width: 45%;
+    --sponsor-right-width: 55%;
+    --sponsor-border-radius: 51px;
+    --sponsor-logo-aspect: calc(255 / 564); /* 564px × 255px aspect ratio */
+    --figma-cyan: #00F7FF;
+    --figma-black: #000000;
+    --figma-white: #FFFFFF;
+}
+
+/* Progressive Enhancement: Base styles first */
+.sponsor-section-container {
+    position: relative;
+    width: 100%;
+    min-height: 300px; /* ロゴを見やすくするための最小高さを追加 */
+    height: auto; /* 固定高さを削除し、コンテンツに合わせて自動調整 */
+    overflow: hidden;
+    background-color: var(--figma-black, #000000);
+}
+
+/* Enhanced Grid Layout for Modern Browsers */
+@supports (display: grid) {
+    .sponsor-section-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: var(--sponsor-main-height, 62%) var(--sponsor-content-height, 38%);
+        width: 100%;
+        max-width: 100vw;
+        height: var(--sponsor-section-height, 67.5rem);
+        position: relative;
+    }
+}
+
+/* Main Slider Container (Priority 1) - Semantic Section */
+.sponsor-main-slider {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 3;
+}
+
+/* Fallback for non-grid browsers */
+@supports not (display: grid) {
+    .sponsor-main-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 62%;
+    }
+}
+
+/* Sponsor Content Container */
+.sponsor-content-container {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Fallback for non-grid browsers */
+@supports not (display: grid) {
+    .sponsor-content-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 38%;
+        display: flex;
+    }
+}
+
+/* Sponsor Content Left (Priority 3) - Semantic Article Section */
+.sponsor-content-left {
+    flex: 0 0 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+}
+
+/* Fallback for non-grid browsers */
+@supports not (display: grid) {
+    .sponsor-content-left {
+        flex: 0 0 45%;
+    }
+}
+
+/* Logo Slider Right (Priority 2) - Semantic Navigation */
+.sponsor-logo-right {
+    flex: 0 0 55%;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    padding: 30px 0; /* ロゴエリアに上下パディングを追加 */
+}
+
+/* Fallback for non-grid browsers */
+@supports not (display: grid) {
+    .sponsor-logo-right {
+        flex: 0 0 55%;
+    }
+}
+
+/* ========================================
+   SWIPER CUSTOM STYLES - Enhanced for Sponsor Section
+   ======================================== */
+
+/* Main Slider Responsive Width - Cross-browser compatibility */
+.main-slider-desktop .swiper-slide,
+.main-slider-mobile .swiper-slide {
+    width: 100% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    border-radius: var(--sponsor-border-radius, 51px);
+    overflow: hidden;
+}
+
+/* Logo Slider Continuous Animation */
+.logo-slider-desktop .swiper-wrapper,
+.logo-slider-mobile .swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+
+/* Sponsor Logo Slides - Simplified */
+.sponsor-logo-right .swiper-slide {
+    min-width: 0;
+}
+
+/* Accessibility: Ensure focus visibility */
+.sponsor-logo-right .swiper-slide a:focus,
+.sponsor-logo-right .swiper-slide img:focus {
+    outline: 2px solid var(--figma-cyan, #00F7FF);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS - Mobile First Approach
+   ======================================== */
+
+/* Tablet and Desktop optimizations */
+@media (min-width: 768px) {
+    .sponsor-content-container {
+        flex-direction: row;
+    }
+}
+
+/* Mobile Layout Adjustments */
+@media (max-width: 767px) {
+    .sponsor-content-container {
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .sponsor-content-left {
+        flex: 0 0 30%;
+    }
+    
+    .sponsor-logo-right {
+        flex: 0 0 70%;
+    }
+    
+    /* Fallback for non-grid browsers */
+    @supports not (display: grid) {
+        .sponsor-content-container {
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .sponsor-content-left {
+            flex: 0 0 30%;
+        }
+        
+        .sponsor-logo-right {
+            flex: 0 0 70%;
+        }
+    }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* GPU Acceleration for smooth animations */
+.sponsor-main-slider,
+.sponsor-logo-right {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Reduce layout thrashing */
+.sponsor-section-container * {
+    box-sizing: border-box;
+}
+
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .sponsor-logo-right .swiper-slide {
+        border: 2px solid var(--figma-white, #FFFFFF);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .logo-slider-desktop .swiper-wrapper,
+    .logo-slider-mobile .swiper-wrapper {
+        transition: none !important;
+    }
+    
+    .sponsor-main-slider,
+    .sponsor-logo-right {
+        will-change: auto;
+    }
+}
+
+/* ========================================
+   登録ダンサー詳細ページ - 新デザイン実装
+   ======================================== */
+
+/* メインコンテナ */
+.toroku-dancer-detail {
+    background-color: var(--dancer-bg-black);
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ========================================
+   デスクトップレイアウト
+   ======================================== */
+.desktop-layout {
+    display: grid;
+    grid-template-columns: var(--dancer-desktop-left) var(--dancer-desktop-right);
+    height: 100vh;
+    width: 100%;
+}
+
+/* 左列: サムネイル画像エリア */
+.desktop-layout .thumbnail-area {
+    position: relative;
+    height: 100vh;
+    background-color: #3a44ff; /* デザイン準拠の青色 */
+}
+
+.desktop-layout .thumbnail-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.desktop-layout .thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #3a44ff;
+}
+
+/* 右列: コンテンツエリア */
+.desktop-layout .content-area {
+    padding: var(--dancer-padding);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: var(--dancer-bg-black);
+}
+
+/* ヘッダーエリア */
+.desktop-layout .header-area {
+    margin-bottom: 60px;
+}
+
+.desktop-layout .dancer-name {
+    color: var(--dancer-text-white);
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.desktop-layout .dancer-genre {
+    color: var(--dancer-text-white);
+    font-size: clamp(20px, 2vw, 32px);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* Performance セクション */
+.desktop-layout .performance-section {
+    margin-bottom: 60px;
+}
+
+.desktop-layout .section-title {
+    color: var(--dancer-text-white);
+    font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 400;
+    margin-bottom: 30px;
+    letter-spacing: 0.02em;
+}
+
+/* Performance コンテナ - 左固定画像 + 右YouTubeスライダー */
+.desktop-layout .performance-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--dancer-gap);
+}
+
+/* 左側: 固定画像エリア */
+.desktop-layout .performance-fixed-image {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: var(--dancer-video-radius);
+    overflow: hidden;
+}
+
+.desktop-layout .performance-fixed-image .fixed-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.desktop-layout .performance-fixed-image .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #3a44ff;
+    border-radius: var(--dancer-video-radius);
+}
+
+/* 右側: YouTubeスライダーエリア */
+.desktop-layout .youtube-slider-container {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: var(--dancer-video-radius);
+    overflow: hidden;
+}
+
+.desktop-layout .youtube-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.desktop-layout .youtube-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.desktop-layout .youtube-slider .slide.active {
+    opacity: 1;
+}
+
+.desktop-layout .youtube-slider .slide iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.desktop-layout .video-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: var(--dancer-video-radius);
+}
+
+/* Profile セクション */
+.desktop-layout .profile-section {
+    flex: 1;
+}
+
+.desktop-layout .profile-content {
+    display: flex;
+    gap: 40px;
+}
+
+.desktop-layout .profile-text {
+    flex: 1;
+    color: var(--dancer-text-white);
+    font-size: clamp(14px, 1.2vw, 16px);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+.desktop-layout .sns-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.desktop-layout .sns-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--dancer-text-white);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.desktop-layout .sns-icon:hover {
+    background-color: var(--dancer-text-white);
+}
+
+.desktop-layout .sns-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.desktop-layout .sns-icon:hover img {
+    filter: none;
+}
+
+/* ========================================
+   モバイルレイアウト
+   ======================================== */
+.mobile-layout {
+    background-color: var(--dancer-bg-black);
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+/* モバイルヘッダー */
+.mobile-header {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.mobile-header .dancer-name {
+    color: var(--dancer-text-white);
+    font-size: clamp(64px, 16vw, 120px);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+    line-height: 1.1;
+}
+
+.mobile-header .dancer-genre {
+    color: var(--dancer-text-white);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* モバイルサムネイル */
+.mobile-thumbnail {
+    width: 100%;
+    height: 70vh;
+    position: relative;
+    background-color: #3a44ff;
+}
+
+.mobile-thumbnail .thumbnail-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.mobile-thumbnail .thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #3a44ff;
+}
+
+/* モバイルPerformance */
+.mobile-performance {
+    padding: 40px 20px;
+}
+
+.mobile-performance .section-title {
+    color: var(--dancer-text-white);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+}
+
+/* モバイル固定画像エリア */
+.mobile-performance .mobile-fixed-image {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: var(--dancer-mobile-radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.mobile-performance .mobile-fixed-image .fixed-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mobile-performance .mobile-fixed-image .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #3a44ff;
+    border-radius: var(--dancer-mobile-radius);
+}
+
+/* モバイルYouTubeスライダーエリア */
+.mobile-performance .mobile-youtube-slider {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: var(--dancer-mobile-radius);
+    overflow: hidden;
+}
+
+.mobile-performance .youtube-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-performance .youtube-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.mobile-performance .youtube-slider .slide.active {
+    opacity: 1;
+}
+
+.mobile-performance .youtube-slider .slide iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* モバイルProfile */
+.mobile-profile {
+    padding: 40px 20px;
+}
+
+.mobile-profile .section-title {
+    color: var(--dancer-text-white);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+}
+
+.mobile-profile .profile-text {
+    color: var(--dancer-text-white);
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    margin-bottom: 30px;
+}
+
+.mobile-profile .sns-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.mobile-profile .sns-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--dancer-text-white);
+    border-radius: 8px;
+}
+
+.mobile-profile .sns-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+/* ========================================
+   レスポンシブブレークポイント
+   ======================================== */
+
+/* デスクトップ（768px以上）でのレイアウト制御 */
+@media (min-width: 768px) {
+    .desktop-layout {
+        display: grid !important;
+    }
+    
+    .mobile-layout {
+        display: none !important;
+    }
+    
+    /* Tailwind md:hidden override */
+    .md\:hidden {
+        display: none !important;
+    }
+    
+    /* Tailwind md:grid override */
+    .md\:grid {
+        display: grid !important;
+    }
+}
+
+/* モバイル（767px以下）でのレイアウト制御 */
+@media (max-width: 767px) {
+    .desktop-layout {
+        display: none !important;
+    }
+    
+    .mobile-layout {
+        display: block !important;
+    }
+    
+    /* モバイルでのフォントサイズ調整 */
+    .mobile-header .dancer-name {
+        font-size: clamp(64px, 16vw, 120px);
+    }
+    
+    .mobile-header .dancer-genre {
+        font-size: clamp(16px, 4vw, 18px);
+    }
+    
+    .mobile-performance .section-title,
+    .mobile-profile .section-title {
+        font-size: clamp(20px, 5vw, 24px);
+    }
+}
+
+/* ========================================
+   INFO & NEWS 詳細ページ - CSS Grid レイアウト
+   ======================================== */
+
+/* メインコンテナ */
+.info-news-single-container {
+    background-color: var(--info-news-bg-black);
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ========================================
+   デスクトップレイアウト (768px以上)
+   ======================================== */
+.info-news-desktop-layout {
+    display: grid;
+    grid-template-columns: var(--info-news-desktop-left) var(--info-news-desktop-right);
+    min-height: 100vh;
+    max-width: var(--info-news-container-max-width);
+    margin: 0 auto;
+    gap: 0;
+}
+
+/* 左列: ビジュアルコンテンツ */
+.info-news-visual-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--info-news-padding);
+    background-color: var(--info-news-bg-black);
+}
+
+.info-news-image-container,
+.info-news-video-container {
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--info-news-image-radius);
+    overflow: hidden;
+}
+
+.info-news-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.info-news-video-embed {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: var(--info-news-image-radius);
+    overflow: hidden;
+}
+
+.info-news-video-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.info-news-video-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* 右列: コンテンツ */
+.info-news-content-column {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--info-news-padding);
+    background-color: var(--info-news-bg-black);
+}
+
+.info-news-content-inner {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* メタ情報 */
+.info-news-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.info-news-date {
+    color: var(--info-news-text-white);
+    font-size: var(--info-news-date-size);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.info-news-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.info-news-category-tag {
+    background-color: var(--info-news-category-bg);
+    color: var(--info-news-text-white);
+    padding: 5px 12px;
+    border-radius: var(--info-news-category-radius);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* タイトル */
+.info-news-title {
+    color: var(--info-news-text-white);
+    font-size: var(--info-news-title-size-desktop);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    margin-bottom: 30px;
+}
+
+/* コンテンツ */
+.info-news-content {
+    color: var(--info-news-text-white);
+    font-size: var(--info-news-content-size);
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+}
+
+.info-news-content p {
+    margin-bottom: 1.5rem;
+}
+
+.info-news-content h2,
+.info-news-content h3,
+.info-news-content h4 {
+    color: var(--info-news-text-white);
+    margin: 2rem 0 1rem 0;
+    line-height: 1.4;
+}
+
+.info-news-content a {
+    color: var(--info-news-accent-blue);
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.info-news-content a:hover {
+    opacity: 0.8;
+}
+
+/* リンクボタン */
+.info-news-button-container {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.info-news-link-button {
+    display: inline-block;
+    background-color: var(--info-news-accent-blue);
+    color: var(--info-news-text-white);
+    padding: 8px 20px;
+    border-radius: var(--info-news-button-radius);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 120px;
+}
+
+.info-news-link-button:hover {
+    background-color: var(--info-news-text-white);
+    color: var(--info-news-accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(58, 68, 255, 0.3);
+}
+
+/* ========================================
+   モバイルレイアウト (767px以下) - 新デザイン実装
+   ======================================== */
+.info-news-mobile-layout {
+    background-color: var(--info-news-bg-black);
+    min-height: 100vh;
+    min-height: 100svh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto 30vh auto;
+    grid-template-areas: 
+        "header-area"
+        "visual-area" 
+        "content-area";
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 上部ヘッダーエリア */
+.info-news-mobile-header {
+    grid-area: header-area;
+    background-color: var(--info-news-bg-black);
+    padding: clamp(20px, 5vw, 40px);
+    text-align: left;
+}
+
+/* モバイル: 日付 */
+.info-news-mobile-date {
+    color: var(--info-news-text-white);
+    font-size: clamp(12px, 3vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin-bottom: clamp(10px, 3vw, 20px);
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* モバイル: タイトル */
+.info-news-mobile-title {
+    color: var(--info-news-text-white);
+    font-size: clamp(24px, 6vw, 36px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    margin: 0 0 clamp(15px, 4vw, 25px) 0; /* 下部余白追加 */
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 中央ビジュアルエリア - 30vh固定（要望対応） */
+.info-news-mobile-visual-area {
+    grid-area: visual-area;
+    height: 30vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #3a44ff; /* あおいパーツの背景色 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-news-mobile-image-container,
+.info-news-mobile-video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-news-mobile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.info-news-mobile-video-embed {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-news-mobile-video-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+.info-news-mobile-video-thumbnail {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-news-mobile-video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* 下部コンテンツエリア */
+.info-news-mobile-content-area {
+    grid-area: content-area;
+    background-color: var(--info-news-bg-black);
+    padding: clamp(20px, 5vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 4vw, 30px);
+    min-height: fit-content;
+}
+
+/* モバイル: コンテンツ */
+.info-news-mobile-content {
+    color: var(--info-news-text-white);
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+}
+
+.info-news-mobile-content p {
+    margin-bottom: 1.5rem;
+}
+
+.info-news-mobile-content h2,
+.info-news-mobile-content h3,
+.info-news-mobile-content h4 {
+    color: var(--info-news-text-white);
+    margin: 1.5rem 0 1rem 0;
+    line-height: 1.4;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.info-news-mobile-content a {
+    color: var(--info-news-accent-blue);
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.info-news-mobile-content a:hover {
+    opacity: 0.8;
+}
+
+/* モバイル: リンクボタン - 右下配置 */
+.info-news-mobile-button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.info-news-mobile-link-button {
+    display: inline-block;
+    background-color: var(--info-news-accent-blue);
+    color: var(--info-news-text-white);
+    padding: clamp(6px, 2vw, 10px) clamp(12px, 3vw, 18px);
+    border-radius: clamp(15px, 3vw, 20px);
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    min-width: clamp(80px, 20vw, 120px);
+    text-align: center;
+}
+
+.info-news-mobile-link-button:hover {
+    background-color: var(--info-news-text-white);
+    color: var(--info-news-accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(58, 68, 255, 0.3);
+}
+
+/* カテゴリ表示（必要に応じて） */
+.info-news-mobile-categories {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(15px, 4vw, 25px);
+}
+
+.info-news-mobile-category-tag {
+    background-color: var(--info-news-category-bg);
+    color: var(--info-news-text-white);
+    padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+    border-radius: clamp(8px, 2vw, 12px);
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* 旧スタイル互換性のため維持 */
+.info-news-mobile-meta {
+    /* 新デザインでは使用しないが、テンプレート互換のため残す */
+    display: none;
+}
+
+.info-news-mobile-visual {
+    /* 新デザインでは使用しないが、テンプレート互換のため残す */
+    display: none;
+}
+
+/* ========================================
+   レスポンシブブレークポイント
+   ======================================== */
+
+/* デスクトップ（768px以上）での表示制御 */
+@media (min-width: 768px) {
+    .info-news-desktop-layout {
+        display: grid !important;
+    }
+    
+    .info-news-mobile-layout {
+        display: none !important;
+    }
+}
+
+/* モバイル（767px以下）での表示制御 */
+@media (max-width: 767px) {
+    .info-news-desktop-layout {
+        display: none !important;
+    }
+    
+    .info-news-mobile-layout {
+        display: block !important;
+    }
+}
+
+
+/* ========================================
+   INFO & NEWS ARCHIVE PAGE - 参考画像完全再現
+   ======================================== */
+
+/* ========= ルート変数（info-news専用） ========= */
+:root {
+    /* 緑パス余白の推測値 */
+    --info-news-container-pad: clamp(24px, 4vw, 48px);
+    --info-news-gap-x: clamp(24px, 3vw, 48px);
+    --info-news-gap-y: clamp(32px, 4vw, 48px);
+    
+    /* 黄色パス高さ */
+    --info-news-visual-height: clamp(200px, 22vh, 280px);
+    
+    /* タイポグラフィ（既存フォント流用） */
+    --info-news-font: 'Noto Sans JP', sans-serif;
+}
+
+/* ========= コンテナベース ========= */
+.info-news-archive-container {
+    background-color: #000000;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    font-family: var(--info-news-font);
+    container-type: inline-size;
+    container-name: info-news-archive;
+}
+
+/* ========= デスクトップ・モバイル表示制御 ========= */
+.info-news-archive-desktop {
+    display: none; /* デフォルト非表示 */
+}
+
+.info-news-archive-mobile {
+    display: block; /* デフォルト表示 */
+}
+
+/* ========= 2列グリッド基盤（参考画像完全再現） ========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-desktop {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 完全均等2列グリッド */
+        gap: clamp(20px, 3vw, 40px) clamp(24px, 4vw, 48px); /* row-gap column-gap（参考画像目視調整） */
+        padding: clamp(24px, 4vw, 48px);
+    }
+    
+    .info-news-archive-mobile {
+        display: none; /* デスクトップ時は非表示 */
+    }
+}
+
+/* ========= カード基本構造（統一高さ・2列配置） ========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-item {
+        position: relative;
+        height: clamp(200px, 25vh, 320px); /* 統一高さ（参考画像目視調整） */
+        overflow: hidden;
+        border: 1px solid #FFFFFF; /* 参考画像の白線ボーダー */
+    }
+    
+    .info-news-archive-link {
+        display: grid;
+        grid-template-columns: clamp(40%, 45%, 50%) 1fr; /* 画像:コンテンツ比率（参考画像準拠） */
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+/* ========= 黄色パス（画像エリア）========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-visual {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    /* 画像・動画をコンテナ100%幅でフィット、上下オーバーフロー設定 */
+    .info-news-archive-visual img,
+    .info-news-archive-visual iframe {
+        width: 100%; /* コンテナ100%幅 */
+        height: 100%;
+        object-fit: cover; /* アスペクト比保持でカバー */
+        object-position: center; /* 中心軸配置 */
+    }
+}
+
+/* ========= ピンクパス（コンテンツエリア）========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-content {
+        background-color: transparent; /* ピンクパス削除：透明背景、白文字 */
+        padding: clamp(16px, 2vw, 24px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(8px, 1vw, 12px);
+        height: 100%;
+        color: #FFFFFF; /* テキスト色を白に設定 */
+        /* 包含問題修正 */
+        box-sizing: border-box; /* paddingを幅計算に含める */
+        min-width: 0; /* flex/gridアイテムの縮小を許可 */
+        overflow: hidden; /* はみ出し防止 */
+    }
+}
+
+/* ========= タグスタイル（INFO赤・NEWS青）========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-tag {
+        position: relative;
+        color: white;
+        padding: clamp(3px, 0.4vw, 5px) clamp(6px, 0.8vw, 10px);
+        font-size: clamp(9px, 1vw, 10px);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: inline-block;
+        width: fit-content;
+        border-radius: clamp(8px, 1.2vw, 15px);
+    }
+}
+
+/* INFO タグ - 青色 */
+.info-news-archive-tag-info {
+    background-color: #0066FF;
+    color: #FFFFFF;
+}
+
+/* NEWS タグ - 赤色 */
+.info-news-archive-tag-news {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
+
+/* ========= タイトル ========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-title {
+        color: #FFFFFF; /* テキストを白色に変更 */
+        font-size: clamp(14px, 1.8vw, 20px);
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 0.02em;
+        margin: 0;
+        font-family: var(--info-news-font);
+        /* テキスト包含修正 */
+        word-wrap: break-word; /* 長い単語の適切な改行 */
+        word-break: break-word; /* 単語境界での改行許可 */
+        overflow-wrap: break-word; /* 現代的な改行制御 */
+    }
+}
+
+/* ========= 本文概要 ========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-excerpt {
+        color: #FFFFFF; /* テキストを白色に変更 */
+        font-size: clamp(12px, 1.4vw, 14px);
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        flex: 1;
+        font-family: var(--info-news-font);
+        /* テキスト包含修正 */
+        word-wrap: break-word; /* 長い単語の適切な改行 */
+        word-break: break-word; /* 単語境界での改行許可 */
+        overflow-wrap: break-word; /* 現代的な改行制御 */
+    }
+}
+
+/* ========= 日付表示 ========= */
+@container info-news-archive (min-width: 768px) {
+    .info-news-archive-date {
+        color: #FFFFFF; /* テキストを白色に変更 */
+        font-size: clamp(11px, 1.2vw, 13px);
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        margin-top: auto;
+        font-family: var(--info-news-font);
+    }
+}
+
+/* ========= ビジュアルコンテンツ要素 ========= */
+.info-news-archive-image-container,
+.info-news-archive-video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-news-archive-image-container img,
+.info-news-archive-video-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.info-news-archive-video-embed {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-news-archive-video-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+/* ========================================
+   モバイルレイアウト (767px以下)
+   ======================================== */
+@container info-news-archive (max-width: 767px) {
+    .info-news-archive-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(12px, 3vw, 16px);
+        padding: clamp(16px, 4vw, 24px);
+    }
+    
+    .info-news-archive-mobile .info-news-archive-item {
+        height: clamp(120px, 25vw, 160px); /* min-heightをheightに変更してサイズ統一 */
+        overflow: hidden;
+        border: 1px solid #FFFFFF; /* 参考画像の白線ボーダーを追加 */
+    }
+    
+    .info-news-archive-mobile .info-news-archive-link {
+        display: grid;
+        grid-template-columns: clamp(100px, 30vw, 140px) 1fr;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    /* 黄色パス（画像エリア）- モバイル */
+    .info-news-archive-mobile .info-news-archive-visual {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    .info-news-archive-mobile .info-news-archive-visual img,
+    .info-news-archive-mobile .info-news-archive-visual iframe {
+        width: 100%; /* コンテナ100%幅 */
+        height: 100%;
+        object-fit: cover; /* アスペクト比保持でカバー */
+        object-position: center; /* 中心軸配置 */
+    }
+    
+    /* ピンクパス（コンテンツエリア）- モバイル */
+    .info-news-archive-mobile .info-news-archive-content {
+        background-color: transparent; /* ピンクパス削除：透明背景、白文字 */
+        padding: clamp(12px, 3vw, 16px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(6px, 1.5vw, 10px);
+        position: relative;
+        color: #FFFFFF; /* テキスト色を白に設定 */
+        /* 包含問題修正 */
+        box-sizing: border-box; /* paddingを幅計算に含める */
+        min-width: 0; /* flex/gridアイテムの縮小を許可 */
+        overflow: hidden; /* はみ出し防止 */
+    }
+    
+    .info-news-archive-mobile .info-news-archive-tag {
+        position: relative;
+        padding: clamp(2px, 0.6vw, 4px) clamp(5px, 1.2vw, 8px);
+        font-size: clamp(8px, 2vw, 9px);
+        display: inline-block;
+        width: fit-content;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border-radius: clamp(6px, 1.8vw, 12px);
+    }
+    
+    .info-news-archive-mobile .info-news-archive-title {
+        font-size: clamp(13px, 3.6vw, 16px);
+        line-height: 1.4;
+        color: #FFFFFF; /* テキストを白色に変更 */
+        font-weight: 700;
+        margin: 0;
+        font-family: var(--info-news-font);
+        /* テキスト包含修正 */
+        word-wrap: break-word; /* 長い単語の適切な改行 */
+        word-break: break-word; /* 単語境界での改行許可 */
+        overflow-wrap: break-word; /* 現代的な改行制御 */
+    }
+    
+    .info-news-archive-mobile .info-news-archive-excerpt {
+        font-size: clamp(11px, 3vw, 13px);
+        line-height: 1.5;
+        color: #FFFFFF; /* テキストを白色に変更 */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        flex: 1;
+        font-family: var(--info-news-font);
+        /* テキスト包含修正 */
+        word-wrap: break-word; /* 長い単語の適切な改行 */
+        word-break: break-word; /* 単語境界での改行許可 */
+        overflow-wrap: break-word; /* 現代的な改行制御 */
+    }
+    
+    .info-news-archive-mobile .info-news-archive-date {
+        font-size: clamp(10px, 2.6vw, 12px);
+        color: #FFFFFF; /* テキストを白色に変更 */
+        margin-top: auto;
+        font-family: var(--info-news-font);
+    }
+}
+
+/* モバイル非表示設定 */
+@media (min-width: 768px) {
+    .info-news-archive-mobile {
+        display: none;
+    }
+}
+
+/* 以下の行は削除 */
+/* .info-news-archive-mobile .info-news-archive-excerpt {
+        font-size: var(--text-base);
+        line-height: var(--leading-normal);
+        color: rgba(255, 255, 255, 0.8);
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+    
+    .info-news-archive-mobile .info-news-archive-date {
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: auto;
+    }
+}
+
+/* No Posts Message */
+.info-news-archive-no-posts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    color: var(--info-news-text-white);
+    font-size: clamp(16px, 2vw, 20px);
+    text-align: center;
+}
+
+
+/* ========================================
+   NEWS & INFO SECTION - フロントページ
+   ======================================== */
+
+/* セクション基本設定 */
+.news-info-section {
+    background-color: #000;
+    color: #fff;
+    position: relative;
+    container-type: inline-size;
+    container-name: news-info;
+}
+
+/* デスクトップレイアウト（≥768px） */
+.news-info-desktop {
+    display: none;
+}
+
+@container news-info (min-width: 768px) {
+    .news-info-desktop {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: clamp(16px, 2vw, 24px);
+        padding: clamp(40px, 6vw, 80px) clamp(24px, 4vw, 56px);
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+    
+    .news-info-mobile {
+        display: none;
+    }
+    
+    /* Info Column - 左側 5カラム */
+    .info-column {
+        grid-column: 1 / 6;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(16px, 2vw, 24px);
+    }
+    
+    /* News Column - 右側 7カラム */
+    .news-column {
+        grid-column: 6 / 13;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(16px, 2vw, 24px);
+    }
+}
+
+/* 見出しスタイル */
+.info-heading,
+.news-heading {
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+}
+
+.info-heading-svg,
+.news-heading-svg {
+    width: 50%; /* デスクトップ版は50% */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* Info リストスタイル */
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.info-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    padding: clamp(12px, 1.5vw, 20px) 0;
+    transition: opacity 0.3s ease;
+}
+
+.info-link:hover {
+    opacity: 0.7;
+}
+
+.info-content {
+    display: grid;
+    grid-template-columns: clamp(40px, 5vw, 60px) 1fr;
+    gap: clamp(12px, 2vw, 24px);
+    align-items: start;
+}
+
+.info-date {
+    background-color: #fff;
+    color: #000;
+    padding: clamp(4px, 0.5vw, 8px) clamp(8px, 1vw, 12px);
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.info-title {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 700;
+    margin: 0 0 clamp(4px, 0.5vw, 8px) 0;
+    display: inline-block;
+    padding: clamp(2px, 0.25vw, 4px) clamp(8px, 1vw, 12px);
+}
+
+.info-excerpt {
+    font-size: clamp(12px, 1.2vw, 14px);
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+/* デスクトップでのinfo-excerpt 2行レイアウト */
+@media (min-width: 768px) {
+    .info-content {
+        grid-template-rows: auto auto;
+        grid-template-areas: 
+            "date title"
+            "excerpt excerpt";
+    }
+    
+    .info-date {
+        grid-area: date;
+    }
+    
+    .info-title {
+        grid-area: title;
+    }
+    
+    .info-excerpt {
+        grid-area: excerpt;
+        margin-top: clamp(4px, 0.5vw, 8px);
+    }
+}
+
+/* News グリッドスタイル */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.news-item {
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.news-link {
+    display: block;
+    color: #000;
+    text-decoration: none;
+    height: 100%;
+}
+
+.news-visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: clamp(12px, 1.5vw, 20px);
+}
+
+.news-date {
+    display: inline-block;
+    color: #fff;
+    background-color: #0000FF;
+    padding: clamp(4px, 0.5vw, 8px) clamp(12px, 1.5vw, 20px);
+    border-radius: 20px;
+    font-size: clamp(11px, 1.1vw, 13px);
+    font-weight: 700;
+    margin-bottom: clamp(8px, 1vw, 12px);
+}
+
+.news-title {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 700;
+    margin: 0 0 clamp(8px, 1vw, 12px) 0;
+    color: #000;
+}
+
+.news-excerpt {
+    font-size: clamp(12px, 1.2vw, 14px);
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Read More リンク */
+.read-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(14px, 1.4vw, 16px);
+    margin-top: clamp(20px, 3vw, 40px);
+    transition: gap 0.3s ease;
+}
+
+.read-more-link:hover {
+    gap: 16px;
+}
+
+.read-more-link .arrow {
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+/* モバイルレイアウト（≤767px） */
+.news-info-mobile {
+    display: block;
+    padding: clamp(32px, 6vw, 48px) clamp(16px, 4vw, 24px);
+}
+
+@container news-info (min-width: 768px) {
+    .news-info-mobile {
+        display: none;
+    }
+}
+
+/* モバイル Info セクション */
+.mobile-info-section {
+    margin-bottom: clamp(48px, 8vw, 64px);
+}
+
+.mobile-info-heading,
+.mobile-news-heading {
+    margin: 0 0 clamp(20px, 4vw, 32px) 0;
+}
+
+.mobile-info-heading-svg,
+.mobile-news-heading-svg {
+    width: 25%; /* 12カラムの3カラム分 = 25% */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.mobile-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.mobile-info-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-info-link {
+    display: grid;
+    grid-template-columns: clamp(45px, 12vw, 60px) 1fr;
+    gap: clamp(12px, 3vw, 16px);
+    align-items: start;
+    color: inherit;
+    text-decoration: none;
+    padding: clamp(12px, 3vw, 16px) 0;
+}
+
+.mobile-info-date {
+    background-color: #fff;
+    color: #000;
+    padding: clamp(4px, 1vw, 6px) clamp(6px, 1.5vw, 10px);
+    font-size: clamp(11px, 2.8vw, 13px);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.mobile-info-content {
+    overflow: hidden;
+}
+
+.mobile-info-title {
+    font-size: clamp(14px, 3.6vw, 16px);
+    font-weight: 700;
+    margin: 0 0 clamp(4px, 1vw, 6px) 0;
+    display: inline-block;
+    padding: clamp(2px, 0.5vw, 4px) clamp(6px, 1.5vw, 10px);
+}
+
+.mobile-info-excerpt {
+    font-size: clamp(12px, 3vw, 14px);
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* モバイル News セクション */
+.mobile-news-section {
+    position: relative;
+}
+
+.mobile-news-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 4vw, 24px);
+}
+
+.mobile-news-item {
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.mobile-news-link {
+    display: grid;
+    grid-template-columns: clamp(80px, 25vw, 120px) 1fr;
+    gap: clamp(12px, 3vw, 16px);
+    color: #000;
+    text-decoration: none;
+    padding: clamp(12px, 3vw, 16px);
+}
+
+.mobile-news-visual {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+}
+
+.mobile-news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mobile-news-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1vw, 8px);
+}
+
+.mobile-news-date {
+    display: inline-block;
+    color: #fff;
+    background-color: #0000FF;
+    padding: clamp(3px, 0.8vw, 6px) clamp(10px, 2.5vw, 16px);
+    border-radius: 16px;
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 700;
+    align-self: flex-start;
+}
+
+.mobile-news-title {
+    font-size: clamp(14px, 3.6vw, 16px);
+    font-weight: 700;
+    margin: 0;
+    color: #000;
+}
+
+.mobile-news-excerpt {
+    font-size: clamp(11px, 2.8vw, 13px);
+    line-height: 1.4;
+    color: #333;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.mobile-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(13px, 3.3vw, 15px);
+    margin-top: clamp(16px, 4vw, 24px);
+}
+
+/* No posts メッセージ */
+.no-posts {
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    padding: clamp(40px, 6vw, 60px) 0;
+}
+
+/* ====================================================================
+   Single Toroku Dancer Page - Sponsor Section Custom Styles
+   ================================================================== */
+
+/* Base Layout - Desktop & Mobile Common */
+body.single-toroku-dancer .sponsor-section-container {
+    grid-template-rows: 100% !important;
+    height: auto !important;
+    min-height: 400px;
+}
+
+body.single-toroku-dancer .sponsor-content-container {
+    height: 100% !important;
+    grid-row: 1 !important;
+}
+
+.single-sponsor-section .single-sponsor-container {
+    display: grid !important;
+    grid-template-rows: 100%;
+    height: auto;
+    min-height: clamp(400px, 40vh, 500px);
+}
+
+.single-dancer-sponsor {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: inherit;
+}
+
+/* Desktop Layout (768px+) */
+.single-dancer-sponsor .sponsor-logo-right,
+.single-dancer-sponsor .sponsor-content-left {
+    flex: 1;
+    min-width: 0;
+    width: 50%;
+}
+
+.single-content-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.single-sponsor-image {
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Mobile Layout (767px以下) */
+@media (max-width: 767px) {
+    body.single-toroku-dancer .sponsor-section-container {
+        min-height: 300px;
+    }
+    
+    .single-sponsor-section .single-sponsor-container {
+        min-height: clamp(300px, 35vh, 400px);
+    }
+    
+    .single-dancer-sponsor {
+        flex-direction: column;
+        min-height: 300px;
+        align-items: stretch;
+    }
+    
+    /* Layout Order: タイトルpng(上40%) → スライダー(中60%) */
+    .single-dancer-sponsor .sponsor-content-left {
+        width: 100%;
+        flex: 0 0 40%;
+        order: 1;
+        position: relative; /* 子要素のabsolute配置基準 */
+    }
+    
+    /* タイトル画像をbottom配置（スライダーに近づける） */
+    .single-dancer-sponsor .sponsor-content-left > div {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .single-dancer-sponsor .sponsor-logo-right {
+        width: 80vw;
+        height: auto;
+        aspect-ratio: 16/9;
+        margin: 0 auto;
+        flex: 0 0 auto;
+        order: 2;
+    }
+}
+
