@@ -85,7 +85,7 @@ get_header(); ?>
                             
                             <!-- Slide 01 (Node: 156:713) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_01 = get_field('sponsor_main_video_01', 'option');
@@ -110,7 +110,7 @@ get_header(); ?>
                             
                             <!-- Slide 02 (Node: 156:714) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_02 = get_field('sponsor_main_video_02', 'option');
@@ -133,7 +133,7 @@ get_header(); ?>
                             
                             <!-- Slide 03 (Node: 156:715) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_03 = get_field('sponsor_main_video_03', 'option');
@@ -181,7 +181,7 @@ get_header(); ?>
                             
                             <!-- Mobile Slide 01 (Node: 158:93) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_01 = get_field('sponsor_main_video_01', 'option');
@@ -204,7 +204,7 @@ get_header(); ?>
                             
                             <!-- Mobile Slide 02 (Node: 158:92) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_02 = get_field('sponsor_main_video_02', 'option');
@@ -227,7 +227,7 @@ get_header(); ?>
                             
                             <!-- Mobile Slide 03 (Node: 158:91) -->
                             <div class="swiper-slide flex items-center justify-center">
-                                <div class="bg-red-500 rounded-[51px] w-full h-full"
+                                <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
                                     $sponsor_main_video_03 = get_field('sponsor_main_video_03', 'option');
