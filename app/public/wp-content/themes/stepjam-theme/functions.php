@@ -11,71 +11,58 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// QA検証: 統合環境テスト実行 - 2025-09-08
+define('STEPJAM_QA_TEST_TIMESTAMP', '2025-09-08-125900');
+
+// 基本設定
+require_once get_template_directory() . '/inc/enqueue-scripts.php';
+require_once get_template_directory() . '/inc/custom-post-types.php';
+require_once get_template_directory() . '/inc/acf-fields.php';
+
 /**
- * テーマセットアップ
+ * テーマサポート設定
  */
 function stepjam_theme_setup() {
-    // タイトルタグサポート
-    add_theme_support('title-tag');
-    
-    // アイキャッチ画像サポート
-    add_theme_support('post-thumbnails');
-    
     // HTML5サポート
     add_theme_support('html5', array(
-        'comment-list',
-        'comment-form',
         'search-form',
+        'comment-form',
+        'comment-list',
         'gallery',
         'caption',
-        'style',
-        'script'
     ));
     
-    // カスタムメニューサポート
+    // 投稿サムネイル有効化
+    add_theme_support('post-thumbnails');
+    
+    // カスタムロゴサポート
+    add_theme_support('custom-logo', array(
+        'height'      => 100,
+        'width'       => 400,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ));
+    
+    // メニューサポート
     register_nav_menus(array(
-        'primary' => 'メインメニュー',
-        'footer' => 'フッターメニュー'
+        'primary' => 'Primary Menu',
+        'footer'  => 'Footer Menu',
     ));
     
-    // レスポンシブ埋め込みサポート
-    add_theme_support('responsive-embeds');
+    // タイトルタグサポート
+    add_theme_support('title-tag');
 }
 add_action('after_setup_theme', 'stepjam_theme_setup');
 
 /**
- * 機能ファイルの読み込み
- */
-$includes = array(
-    '/inc/enqueue-scripts.php',      // CSS/JS読み込み
-    '/inc/custom-post-types.php',    // カスタム投稿タイプ
-    '/inc/acf-fields.php'           // ACFフィールド設定
-);
-
-foreach ($includes as $file) {
-    if (file_exists(get_template_directory() . $file)) {
-        require_once get_template_directory() . $file;
-    }
-}
-
-/**
- * テーマカスタマイズ
- */
-function stepjam_customize_register($wp_customize) {
-    // 必要に応じてカスタマイザー設定を追加
-    // 現在は基本構造のみ
-}
-add_action('customize_register', 'stepjam_customize_register');
-
-/**
- * ウィジェットエリア登録
+ * ウィジェット領域設定
  */
 function stepjam_widgets_init() {
     register_sidebar(array(
-        'name'          => 'フッターウィジェット',
-        'id'            => 'footer-widget',
-        'description'   => 'フッター領域のウィジェット',
-        'before_widget' => '<div class="footer-widget">',
+        'name'          => 'Main Sidebar',
+        'id'            => 'sidebar-1',
+        'description'   => 'Main sidebar widget area',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
         'after_title'   => '</h3>',
@@ -84,320 +71,107 @@ function stepjam_widgets_init() {
 add_action('widgets_init', 'stepjam_widgets_init');
 
 /**
- * デバッグ用関数（開発時のみ）
+ * 画像サイズ追加
  */
-if (WP_DEBUG) {
-    function stepjam_debug_log($message) {
+function stepjam_image_sizes() {
+    add_image_size('dancer-thumb', 300, 300, true);
+    add_image_size('sponsor-logo', 200, 100, true);
+    add_image_size('news-thumb', 400, 250, true);
+}
+add_action('after_setup_theme', 'stepjam_image_sizes');
+
+/**
+ * WP管理バー非表示（フロントエンド）
+ */
+if (!is_admin()) {
+    show_admin_bar(false);
+}
+
+/**
+ * 開発用デバッグ情報
+ * WP_DEBUG が true の時のみ動作
+ */
+function stepjam_debug_info() {
+    if (defined('WP_DEBUG') && WP_DEBUG && is_front_page()) {
+        echo "<!-- STEPJAM Debug Info -->\n";
+        echo "<!-- ACF Pro Active: " . (function_exists('get_field') ? 'Yes' : 'No') . " -->\n";
+        echo "<!-- Current Theme: " . wp_get_theme()->get('Name') . " -->\n";
+        echo "<!-- WordPress Version: " . get_bloginfo('version') . " -->\n";
+        echo "<!-- QA Test Timestamp: " . (defined('STEPJAM_QA_TEST_TIMESTAMP') ? STEPJAM_QA_TEST_TIMESTAMP : 'Not Set') . " -->\n";
+        echo "<!-- End Debug Info -->\n";
+    }
+}
+add_action('wp_head', 'stepjam_debug_info');
+
+/**
+ * セキュリティ強化
+ */
+// XMLRPCを無効化
+add_filter('xmlrpc_enabled', '__return_false');
+
+// WordPressバージョン非表示
+remove_action('wp_head', 'wp_generator');
+
+// WLWManifest非表示
+remove_action('wp_head', 'wlwmanifest_link');
+
+// RSD非表示
+remove_action('wp_head', 'rsd_link');
+
+/**
+ * 管理画面カスタマイズ
+ */
+function stepjam_admin_styles() {
+    echo '<style>
+        .stepjam-admin-notice {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin: 5px 0 15px;
+        }
+    </style>';
+}
+add_action('admin_head', 'stepjam_admin_styles');
+
+/**
+ * カスタムフィールド値のサニタイズ
+ */
+function stepjam_sanitize_acf_output($value) {
+    if (is_string($value)) {
+        return wp_kses_post($value);
+    }
+    return $value;
+}
+
+/**
+ * パフォーマンス最適化
+ * 不要なスクリプト・スタイル削除
+ */
+function stepjam_optimize_performance() {
+    if (!is_admin()) {
+        // 絵文字スクリプト削除
+        remove_action('wp_head', 'print_emoji_detection_script', 7);
+        remove_action('wp_print_styles', 'print_emoji_styles');
+        remove_action('admin_print_scripts', 'print_emoji_detection_script');
+        remove_action('admin_print_styles', 'print_emoji_styles');
+        
+        // oEmbed削除
+        remove_action('wp_head', 'wp_oembed_add_discovery_links');
+        remove_action('wp_head', 'wp_oembed_add_host_js');
+    }
+}
+add_action('init', 'stepjam_optimize_performance');
+
+/**
+ * エラーログ設定（開発環境）
+ */
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    function stepjam_log($message) {
         if (is_array($message) || is_object($message)) {
-            error_log('[STEPJAM_DEBUG] ' . print_r($message, true));
+            error_log(print_r($message, true));
         } else {
-            error_log('[STEPJAM_DEBUG] ' . $message);
+            error_log($message);
         }
     }
-    
-    // ACF オプションページ問題の調査デバッグ（一時的）
-    add_action('wp_footer', function() {
-        if (is_front_page()) {
-            echo "<!-- ACF DEBUG START -->\n";
-            echo "<!-- ACF functions exist: " . (function_exists('get_field') ? 'YES' : 'NO') . " -->\n";
-            echo "<!-- ACF options exist: " . (function_exists('acf_add_options_page') ? 'YES' : 'NO') . " -->\n";
-            
-            // 実際のget_field結果をテスト
-            $hero_logo_test = get_field('hero_logo');
-            $sponsor_test = get_field('sponsor_main_video_01', 'option');
-            
-            echo "<!-- hero_logo result: " . ($hero_logo_test ? 'HAS_VALUE' : 'NULL') . " -->\n";
-            echo "<!-- sponsor_video result: " . ($sponsor_test ? 'HAS_VALUE' : 'NULL') . " -->\n";
-            
-            // WordPressオプション直接確認
-            $option_test = get_option('options_sponsor_main_video_01');
-            echo "<!-- WordPress option direct: " . ($option_test ? 'HAS_VALUE' : 'NULL') . " -->\n";
-            
-            echo "<!-- ACF DEBUG END -->\n";
-        }
-    });
 }
-
-/**
- * Contact Form AJAX Handler
- */
-function stepjam_handle_contact_form() {
-    // Nonce verification
-    if (!wp_verify_nonce($_POST['stepjam_contact_nonce'], 'stepjam_contact_form')) {
-        wp_die('Security check failed');
-    }
-    
-    // Sanitize and validate input
-    $contact_name = sanitize_text_field($_POST['contact_name']);
-    $contact_kana = sanitize_text_field($_POST['contact_kana']);
-    $contact_email = sanitize_email($_POST['contact_email']);
-    $contact_phone = sanitize_text_field($_POST['contact_phone']);
-    $contact_message = sanitize_textarea_field($_POST['contact_message']);
-    $contact_categories = isset($_POST['contact_category']) ? array_map('sanitize_text_field', $_POST['contact_category']) : array();
-    
-    // Validation
-    $errors = array();
-    
-    if (empty($contact_name)) {
-        $errors[] = '氏名・ご担当者は必須項目です。';
-    }
-    
-    if (empty($contact_kana)) {
-        $errors[] = 'フリガナは必須項目です。';
-    }
-    
-    if (empty($contact_email) || !is_email($contact_email)) {
-        $errors[] = '正しいメールアドレスを入力してください。';
-    }
-    
-    if (empty($contact_phone)) {
-        $errors[] = 'ご連絡先は必須項目です。';
-    }
-    
-    if (empty($contact_categories)) {
-        $errors[] = '概要から最低1つ選択してください。';
-    }
-    
-    if (!empty($errors)) {
-        wp_send_json_error(array('message' => implode('<br>', $errors)));
-        return;
-    }
-    
-    // Prepare email content
-    $admin_email = get_option('admin_email');
-    $site_name = get_bloginfo('name');
-    
-    $subject = '[' . $site_name . '] お問い合わせフォームより';
-    
-    $message = "■ お問い合わせ内容\n";
-    $message .= "────────────────────────\n\n";
-    $message .= "氏名・ご担当者: " . $contact_name . "\n";
-    $message .= "フリガナ: " . $contact_kana . "\n";
-    $message .= "メールアドレス: " . $contact_email . "\n";
-    $message .= "ご連絡先: " . $contact_phone . "\n";
-    $message .= "概要: " . implode(', ', $contact_categories) . "\n";
-    
-    if (!empty($contact_message)) {
-        $message .= "\nお問い合わせ内容:\n" . $contact_message . "\n";
-    }
-    
-    $message .= "\n────────────────────────\n";
-    $message .= "送信日時: " . current_time('Y年m月d日 H:i') . "\n";
-    $message .= "送信者IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
-    
-    $headers = array(
-        'Content-Type: text/plain; charset=UTF-8',
-        'From: ' . $site_name . ' <' . $admin_email . '>',
-        'Reply-To: ' . $contact_name . ' <' . $contact_email . '>'
-    );
-    
-    // Send email
-    $mail_sent = wp_mail($admin_email, $subject, $message, $headers);
-    
-    if ($mail_sent) {
-        // Send auto-reply to user
-        $user_subject = '[' . $site_name . '] お問い合わせありがとうございます';
-        $user_message = $contact_name . " 様\n\n";
-        $user_message .= "この度は、STEPJAMへお問い合わせいただき、ありがとうございます。\n";
-        $user_message .= "お問い合わせ内容を確認次第、担当者よりご連絡させていただきます。\n\n";
-        $user_message .= "今しばらくお待ちください。\n\n";
-        $user_message .= "────────────────────────\n";
-        $user_message .= "STEPJAM運営事務局\n";
-        $user_message .= get_bloginfo('url') . "\n";
-        
-        $user_headers = array(
-            'Content-Type: text/plain; charset=UTF-8',
-            'From: ' . $site_name . ' <' . $admin_email . '>'
-        );
-        
-        wp_mail($contact_email, $user_subject, $user_message, $user_headers);
-        
-        wp_send_json_success(array('message' => 'お問い合わせありがとうございます。確認次第ご連絡いたします。'));
-    } else {
-        wp_send_json_error(array('message' => 'メールの送信に失敗しました。しばらくしてから再度お試しください。'));
-    }
-}
-
-// Register AJAX actions
-add_action('wp_ajax_stepjam_contact_form', 'stepjam_handle_contact_form');
-add_action('wp_ajax_nopriv_stepjam_contact_form', 'stepjam_handle_contact_form');
-
-/**
- * NEXT SJ ナビメニュー対象エリア排他制御
- */
-function stepjam_nx_nav_menu_area_exclusive_control($post_id) {
-    // ACF関数が利用可能かチェック
-    if (!function_exists('get_field') || !function_exists('update_field')) {
-        return;
-    }
-    
-    // 投稿タイプがnx-tokyoでない場合は処理しない
-    if (get_post_type($post_id) !== 'nx-tokyo') {
-        return;
-    }
-    
-    // 現在選択されたエリア取得
-    $selected_area = get_field('nx_nav_menu_area', $post_id);
-    
-    // 'none'または空の場合は排他制御不要
-    if (empty($selected_area) || $selected_area === 'none') {
-        return;
-    }
-    
-    // 同じエリアを選択している他の投稿を検索
-    $conflicting_posts = get_posts(array(
-        'post_type' => 'nx-tokyo',
-        'posts_per_page' => -1,
-        'post_status' => array('publish', 'draft', 'private'),
-        'exclude' => array($post_id), // 現在の投稿は除外
-        'meta_query' => array(
-            array(
-                'key' => 'nx_nav_menu_area',
-                'value' => $selected_area,
-                'compare' => '='
-            )
-        )
-    ));
-    
-    // 競合する投稿がある場合、それらを'none'に変更
-    if (!empty($conflicting_posts)) {
-        $conflicted_titles = array();
-        
-        foreach ($conflicting_posts as $conflicting_post) {
-            update_field('nx_nav_menu_area', 'none', $conflicting_post->ID);
-            $conflicted_titles[] = $conflicting_post->post_title;
-        }
-        
-        // 管理画面通知メッセージを設定
-        $area_names = array(
-            'tokyo' => 'TOKYO',
-            'osaka' => 'OSAKA', 
-            'tohoku' => 'TOHOKU'
-        );
-        
-        $area_name = isset($area_names[$selected_area]) ? $area_names[$selected_area] : $selected_area;
-        $message = sprintf(
-            '以下の投稿の%s選択を解除し、この投稿を%sに設定しました: %s',
-            $area_name,
-            $area_name,
-            implode(', ', $conflicted_titles)
-        );
-        
-        // WordPress Options APIにメッセージを保存（次回管理画面表示時に表示）
-        update_option('stepjam_nav_menu_message', $message, false);
-    }
-}
-add_action('acf/save_post', 'stepjam_nx_nav_menu_area_exclusive_control', 20);
-
-/**
- * NEXT SJ ナビメニュー対象エリア管理画面メッセージ表示
- */
-function stepjam_nx_nav_menu_admin_notices() {
-    $message = get_option('stepjam_nav_menu_message');
-    
-    if ($message) {
-        echo '<div class="notice notice-success is-dismissible">';
-        echo '<p>' . esc_html($message) . '</p>';
-        echo '</div>';
-        delete_option('stepjam_nav_menu_message');
-    }
-}
-add_action('admin_notices', 'stepjam_nx_nav_menu_admin_notices');
-
-/**
- * NEXT SJ ナビゲーション動的リンク生成
- */
-function stepjam_get_next_nav_links() {
-    $links = array(
-        'tokyo' => array('url' => '#', 'available' => false, 'title' => ''),
-        'osaka' => array('url' => '#', 'available' => false, 'title' => ''),
-        'tohoku' => array('url' => '#', 'available' => false, 'title' => '')
-    );
-    
-    if (!function_exists('get_posts') || !function_exists('get_field')) {
-        return $links;
-    }
-    
-    $areas = array('tokyo', 'osaka', 'tohoku');
-    
-    foreach ($areas as $area) {
-        $posts = get_posts(array(
-            'post_type' => 'nx-tokyo',
-            'posts_per_page' => 1,
-            'post_status' => 'publish',
-            'meta_query' => array(
-                array(
-                    'key' => 'nx_nav_menu_area',
-                    'value' => $area,
-                    'compare' => '='
-                )
-            )
-        ));
-        
-        if (!empty($posts)) {
-            $links[$area] = array(
-                'url' => get_permalink($posts[0]->ID),
-                'available' => true,
-                'title' => $posts[0]->post_title
-            );
-        }
-    }
-    
-    return $links;
-}
-
-/**
- * Enqueue contact form scripts
- */
-function stepjam_contact_form_scripts() {
-    if (is_page_template('contact.php')) {
-        wp_localize_script('stepjam-main-js', 'stepjam_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('stepjam_contact_form')
-        ));
-    }
-}
-add_action('wp_enqueue_scripts', 'stepjam_contact_form_scripts');
-
-/**
- * FAQ投稿のリダイレクト動線改善
- * 
- * 問題：FAQ編集後の遷移が単体投稿で確認しづらい
- * 解決：アーカイブページ(/faq/)への統一リダイレクト
- * 
- * 対象ボタン：
- * - プレビューボタン 
- * - 管理バー「FAQを表示」リンク
- */
-
-// FAQプレビューリンクの変更
-function stepjam_faq_preview_redirect($preview_link, $post) {
-    // 投稿オブジェクトとタイプのチェック
-    if (!$post || !isset($post->post_type) || $post->post_type !== 'faq') {
-        return $preview_link;
-    }
-    
-    // FAQアーカイブページへリダイレクト
-    return home_url('/faq/');
-}
-add_filter('preview_post_link', 'stepjam_faq_preview_redirect', 10, 2);
-
-// 管理バー「FAQを表示」リンクの変更
-function stepjam_admin_bar_faq_link($wp_admin_bar) {
-    global $post;
-    
-    // FAQ編集画面でのみ実行
-    if (is_admin() && $post && isset($post->post_type) && $post->post_type === 'faq') {
-        // 既存の「表示」リンクを削除
-        $wp_admin_bar->remove_node('view');
-        
-        // FAQアーカイブページへのリンクを追加
-        $wp_admin_bar->add_node(array(
-            'id' => 'view-faq-archive',
-            'title' => 'FAQを表示',
-            'href' => home_url('/faq/'),
-        ));
-    }
-}
-add_action('admin_bar_menu', 'stepjam_admin_bar_faq_link', 81);
-

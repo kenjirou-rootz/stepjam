@@ -3,8 +3,10 @@
 
 # 設定
 LOCAL_UPLOADS="/Users/hayashikenjirou/Local Sites/stepjam/app/public/wp-content/uploads"
+REMOTE_HOST="stepjam-xserver"
 REMOTE_UPLOADS="/home/kenjirou0402/rootzexport.info/public_html/wp-content/uploads"
 EXCLUDE_FILE="$(dirname "$0")/rsync-exclude.txt"
+SSH_CONFIG="/Users/hayashikenjirou/Local Sites/stepjam/ssh/config"
 
 echo "🖼️ メディアファイル同期"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -21,16 +23,16 @@ case $direction in
         echo "📤 ローカル → 本番 同期開始..."
         rsync -avz --progress \
             --exclude-from="$EXCLUDE_FILE" \
-            -e "ssh -p 10022 -i ~/.ssh/xserver_stepjam.key" \
+            -e "ssh -F $SSH_CONFIG" \
             "$LOCAL_UPLOADS/" \
-            "kenjirou0402@sv3020.xserver.jp:$REMOTE_UPLOADS/"
+            "$REMOTE_HOST:$REMOTE_UPLOADS/"
         ;;
     2)
         echo "📥 本番 → ローカル 同期開始..."
         rsync -avz --progress \
             --exclude-from="$EXCLUDE_FILE" \
-            -e "ssh -p 10022 -i ~/.ssh/xserver_stepjam.key" \
-            "kenjirou0402@sv3020.xserver.jp:$REMOTE_UPLOADS/" \
+            -e "ssh -F $SSH_CONFIG" \
+            "$REMOTE_HOST:$REMOTE_UPLOADS/" \
             "$LOCAL_UPLOADS/"
         ;;
     3)
@@ -38,14 +40,14 @@ case $direction in
         # 新しいファイルを双方向で同期
         rsync -avzu --progress \
             --exclude-from="$EXCLUDE_FILE" \
-            -e "ssh -p 10022 -i ~/.ssh/xserver_stepjam.key" \
+            -e "ssh -F $SSH_CONFIG" \
             "$LOCAL_UPLOADS/" \
-            "kenjirou0402@sv3020.xserver.jp:$REMOTE_UPLOADS/"
+            "$REMOTE_HOST:$REMOTE_UPLOADS/"
         
         rsync -avzu --progress \
             --exclude-from="$EXCLUDE_FILE" \
-            -e "ssh -p 10022 -i ~/.ssh/xserver_stepjam.key" \
-            "kenjirou0402@sv3020.xserver.jp:$REMOTE_UPLOADS/" \
+            -e "ssh -F $SSH_CONFIG" \
+            "$REMOTE_HOST:$REMOTE_UPLOADS/" \
             "$LOCAL_UPLOADS/"
         ;;
     *)

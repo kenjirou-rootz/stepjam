@@ -1,0 +1,3 @@
+#!/bin/bash
+# STEPJAM Git クイックアクセスラッパー
+exec "/Users/hayashikenjirou/Local Sites/stepjam/deploy/secure-git-workflow.sh" "$@"

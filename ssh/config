@@ -1,0 +1,18 @@
+# STEPJAM SSH設定ファイル
+# セキュリティ保持型統合ワークフロー用
+# パスフレーズ: rootz6002
+
+# GitHub設定
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/Local\ Sites/stepjam/ssh/stepjam_github_ed25519
+    IdentitiesOnly yes
+
+# Xserver本番環境設定
+Host stepjam-xserver
+    HostName sv3020.xserver.jp
+    Port 10022
+    User kenjirou0402
+    IdentityFile ~/Local\ Sites/stepjam/ssh/kenjirou0402.key
+    IdentitiesOnly yes
