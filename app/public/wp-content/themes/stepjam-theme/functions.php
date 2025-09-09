@@ -89,19 +89,21 @@ if (!is_admin()) {
 
 /**
  * 開発用デバッグ情報
- * WP_DEBUG が true の時のみ動作
+ * 本番環境では関数自体が登録されない
  */
-function stepjam_debug_info() {
-    if (defined('WP_DEBUG') && WP_DEBUG && is_front_page()) {
-        echo "<!-- STEPJAM Debug Info -->\n";
-        echo "<!-- ACF Pro Active: " . (function_exists('get_field') ? 'Yes' : 'No') . " -->\n";
-        echo "<!-- Current Theme: " . wp_get_theme()->get('Name') . " -->\n";
-        echo "<!-- WordPress Version: " . get_bloginfo('version') . " -->\n";
-        echo "<!-- QA Test Timestamp: " . (defined('STEPJAM_QA_TEST_TIMESTAMP') ? STEPJAM_QA_TEST_TIMESTAMP : 'Not Set') . " -->\n";
-        echo "<!-- End Debug Info -->\n";
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    function stepjam_debug_info() {
+        if (is_front_page()) {
+            echo "<!-- STEPJAM Debug Info -->\n";
+            echo "<!-- ACF Pro Active: " . (function_exists('get_field') ? 'Yes' : 'No') . " -->\n";
+            echo "<!-- Current Theme: " . wp_get_theme()->get('Name') . " -->\n";
+            echo "<!-- WordPress Version: " . get_bloginfo('version') . " -->\n";
+            echo "<!-- QA Test Timestamp: " . (defined('STEPJAM_QA_TEST_TIMESTAMP') ? STEPJAM_QA_TEST_TIMESTAMP : 'Not Set') . " -->\n";
+            echo "<!-- End Debug Info -->\n";
+        }
     }
+    add_action('wp_head', 'stepjam_debug_info');
 }
-add_action('wp_head', 'stepjam_debug_info');
 
 /**
  * セキュリティ強化
@@ -532,10 +534,11 @@ function stepjam_execute_batch_processing() {
 
 /**
  * ACF JSON同期状況確認（管理画面・開発用）
+ * 本番環境では関数自体が登録されない
  */
-add_action('wp_head', 'stepjam_acf_sync_debug');
-function stepjam_acf_sync_debug() {
-    if (defined('WP_DEBUG') && WP_DEBUG && current_user_can('manage_options')) {
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    function stepjam_acf_sync_debug() {
+        if (current_user_can('manage_options')) {
         $json_dir = get_stylesheet_directory() . '/acf-json';
         
         if (file_exists($json_dir)) {
@@ -555,7 +558,9 @@ function stepjam_acf_sync_debug() {
         } else {
             echo "<!-- ACF-Git同期システム: acf-json directory not found -->\n";
         }
+        }
     }
+    add_action('wp_head', 'stepjam_acf_sync_debug');
 }
 
 /**
