@@ -1,11 +1,82 @@
-# WordPress
+# WordPress Core Files (Complete Exclusion)
+app/public/wp-admin/
+app/public/wp-includes/
+app/public/wp-content/plugins/
+app/public/wp-content/languages/
+app/public/wp-content/themes/twentytwentyfive/
+app/public/wp-content/themes/twentytwentyfour/
+app/public/wp-content/themes/twentytwentythree/
+app/public/wp-content/themes/index.php
+app/public/wp-*.php
+app/public/index.php
+app/public/license.txt
+app/public/readme.html
+app/public/xmlrpc.php
+
+# WordPress Generated Content
+app/public/wp-content/uploads/
+app/public/wp-content/cache/
+app/public/wp-content/backup-db/
+app/public/wp-content/backups/
+app/public/wp-content/blogs.dir/
+app/public/wp-content/upgrade/
+app/public/wp-content/wpvividbackups/
+
+# Our Custom Theme (KEEP TRACKED)
+# app/public/wp-content/themes/stepjam-theme/ - THIS STAYS IN GIT
+# app/public/wp-content/themes/stepjam-theme/acf-json/ - ACF Field Definitions (TRACKED)
+
+# WordPress Config (Security)
 wp-config.php
-wp-content/uploads/
-wp-content/cache/
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/upgrade/
+app/public/wp-config.php
+.htaccess
+app/public/.htaccess
+
+# Database & Backups
+*.sql
+**/*.sql
+backups/
+バックアップ/
+user-resources/バックアップ/
+
+# SSH Keys and Sensitive Files (CRITICAL SECURITY)
+ssh/
+ssh/*
+ssh/*.key
+ssh/*_rsa
+ssh/*_rsa.pub  
+ssh/*_ed25519
+ssh/*_ed25519.pub
+ssh/config
+ssh/*.pem
+**/*_rsa
+**/*_ed25519
+**/*.key
+**/*.pem
+
+# Database backups
+*.sql
+backups/*.sql
+database-backup-*.sql
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# MCP and Testing Output
+.claude/
+.playwright-mcp/
+.serena/
+playwright-investigations/
+**/*trace.zip
+
+# Debug and Development Files
+*debug*.php
+local-xdebug*.php
+*-test-*.php
+test-*.php
+*-migration.php
 
 # OS generated files
 .DS_Store
@@ -58,27 +129,14 @@ conf/
 logs/
 app/sql/
 
-# SSH Keys and Sensitive Files
-ssh/*.key
-ssh/*_rsa
-ssh/*_rsa.pub  
-ssh/*_ed25519
-ssh/*_ed25519.pub
-ssh/config
-ssh/*.pem
-
-# Database backups
-*.sql
-backups/*.sql
-
-# Environment files
-.env
-.env.local
-.env.production
-
 # Temporary files
 temp_*
-*.tmp# SSH Private Keys (Security)
-ssh/*_ed25519
-ssh/*_rsa
-ssh/*.key
+*.tmp
+
+# Large backup files
+*.zip
+*.tar.gz
+*.rar
+
+# WordPress specific temp files
+wp-git_guide/
