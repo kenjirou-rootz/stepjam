@@ -3,12 +3,12 @@
     "title": "スポンサー設定",
     "fields": [
         {
-            "key": "field_68bee7c085040",
-            "label": "",
-            "name": "",
+            "key": "field_sponsor_main_video_01",
+            "label": "メインビデオ 01",
+            "name": "sponsor_main_video_01",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "file",
+            "instructions": "スポンサーメイン動画1（MP4形式）",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,20 +16,148 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,webm"
+        },
+        {
+            "key": "field_sponsor_main_video_02",
+            "label": "メインビデオ 02",
+            "name": "sponsor_main_video_02",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "スポンサーメイン動画2（MP4形式）",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,webm"
+        },
+        {
+            "key": "field_sponsor_main_video_03",
+            "label": "メインビデオ 03",
+            "name": "sponsor_main_video_03",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "スポンサーメイン動画3（MP4形式）",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,webm"
+        },
+        {
+            "key": "field_sponsors_slides",
+            "label": "スポンサーロゴスライド",
+            "name": "sponsors_slides",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "スポンサーロゴのスライダー設定",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "スポンサーを追加",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_sponsor_logo",
+                    "label": "スポンサーロゴ",
+                    "name": "sponsor_logo",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "スポンサーのロゴ画像",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_sponsors_slides"
+                },
+                {
+                    "key": "field_sponsor_name",
+                    "label": "スポンサー名",
+                    "name": "sponsor_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "スポンサーの名前（ALTテキストとして使用）",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_sponsors_slides"
+                },
+                {
+                    "key": "field_sponsor_url",
+                    "label": "スポンサーURL",
+                    "name": "sponsor_url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "スポンサーのウェブサイトURL（任意）",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https://...",
+                    "parent_repeater": "field_sponsors_slides"
+                }
+            ]
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "sponsor-settings"
             }
         ]
     ],
@@ -40,7 +168,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
+    "description": "スポンサー関連の設定を管理します。メイン動画とロゴスライダーの設定が可能です。",
     "show_in_rest": 0,
-    "modified": 1757341641
+    "modified": 1757359200
 }

@@ -282,8 +282,16 @@ const isDesktop = window.innerWidth >= 768;
 
 ## Project-Specific Documentation
 
-Additional documentation available in:
-- `/user-resources/wordpress移行ガイド/` - WordPress migration guides
+### 開発ガイド体系
+**メインガイド**: `/wp-git_guide/STEPJAM統合開発ガイド.md` - **完全統合版開発ガイド（最新）**
+- 開発環境セットアップ・日常ワークフロー・Git運用・ACF管理・デプロイ・エラー対処の全体系
+
+**関連ドキュメント**:
+- `/docs/secure-workflow-guide.md` - セキュリティワークフロー詳細仕様
+- `/wp-git_guide/archive-old-guides/` - 旧ガイドファイル（参考・履歴用）
+
+**プロジェクト固有情報**:
+- `/user-resources/wordpress移行ガイド/` - WordPress migration guides  
 - `/user-resources/レスポンシブガイド/` - Responsive design guidelines
 - `/user-resources/logs/` - Development logs and completed work reports
 

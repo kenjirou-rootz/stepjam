@@ -3,12 +3,12 @@
     "title": "INFO・NEWS 記事設定",
     "fields": [
         {
-            "key": "field_68bee35845e28",
-            "label": "",
-            "name": "",
+            "key": "field_info_news_visual_type",
+            "label": "表示タイプ",
+            "name": "info_news_visual_type",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "select",
+            "instructions": "画像または動画を選択してください",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,12 +16,256 @@
                 "class": "",
                 "id": ""
             },
+            "choices": {
+                "image": "画像",
+                "video": "動画"
+            },
+            "default_value": "image",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_info_news_image",
+            "label": "メイン画像",
+            "name": "info_news_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "記事のメイン画像を設定してください",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_visual_type",
+                        "operator": "==",
+                        "value": "image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_info_news_video_url",
+            "label": "動画URL",
+            "name": "info_news_video_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "YouTube動画のURLを入力してください",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_visual_type",
+                        "operator": "==",
+                        "value": "video"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "default_value": "",
+            "placeholder": "https://www.youtube.com/watch?v=..."
+        },
+        {
+            "key": "field_info_news_video_thumbnail",
+            "label": "動画サムネイル",
+            "name": "info_news_video_thumbnail",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "動画のサムネイル画像を設定してください",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_visual_type",
+                        "operator": "==",
+                        "value": "video"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_info_news_show_date",
+            "label": "日付を表示",
+            "name": "info_news_show_date",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "記事の日付を表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "日付を表示する",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_info_news_show_category",
+            "label": "カテゴリを表示",
+            "name": "info_news_show_category",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "記事のカテゴリを表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "カテゴリを表示する",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_info_news_show_button",
+            "label": "ボタンを表示",
+            "name": "info_news_show_button",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "記事にボタンを表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "ボタンを表示する",
+            "default_value": 0,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_info_news_button_text",
+            "label": "ボタンテキスト",
+            "name": "info_news_button_text",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "ボタンに表示するテキスト",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_show_button",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "詳細を見る",
             "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_info_news_button_url",
+            "label": "ボタンURL",
+            "name": "info_news_button_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "ボタンのリンク先URL",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_show_button",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://..."
+        },
+        {
+            "key": "field_info_news_button_target",
+            "label": "ボタンリンクターゲット",
+            "name": "info_news_button_target",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "リンクの開き方を選択",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_info_news_show_button",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "_self": "同じウィンドウ",
+                "_blank": "新しいウィンドウ"
+            },
+            "default_value": "_self",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -29,7 +273,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "info-news"
             }
         ]
     ],
@@ -42,5 +286,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757340517
+    "modified": 1757343200
 }

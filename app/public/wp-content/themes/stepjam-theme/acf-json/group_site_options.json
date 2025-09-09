@@ -3,12 +3,138 @@
     "title": "サイト設定",
     "fields": [
         {
-            "key": "field_68bee7a723541",
-            "label": "",
-            "name": "",
+            "key": "field_hero_logo",
+            "label": "ヒーローロゴ",
+            "name": "hero_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "サイトのメインロゴ画像",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg,png,jpg,jpeg",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_hero_logo_alt",
+            "label": "ヒーローロゴ代替テキスト",
+            "name": "hero_logo_alt",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "ロゴの代替テキスト",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "make the moment",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_sponsor_main_video_01",
+            "label": "スポンサーメイン動画 01",
+            "name": "sponsor_main_video_01",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "スポンサーセクションのメイン動画1",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,avi,webm"
+        },
+        {
+            "key": "field_sponsor_main_video_02",
+            "label": "スポンサーメイン動画 02",
+            "name": "sponsor_main_video_02",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "スポンサーセクションのメイン動画2",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,avi,webm"
+        },
+        {
+            "key": "field_sponsor_main_video_03",
+            "label": "スポンサーメイン動画 03",
+            "name": "sponsor_main_video_03",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "スポンサーセクションのメイン動画3",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,avi,webm"
+        },
+        {
+            "key": "field_whsj_video",
+            "label": "WHSJ動画",
+            "name": "whsj_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "WHSJセクションの動画",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,avi,webm"
+        },
+        {
+            "key": "field_whsj_text_content",
+            "label": "WHSJテキストコンテンツ",
+            "name": "whsj_text_content",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "WHSJセクションのテキスト内容",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,18 +144,181 @@
             },
             "default_value": "",
             "maxlength": "",
-            "allow_in_bindings": 0,
+            "rows": 4,
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "new_lines": "br"
+        },
+        {
+            "key": "field_lib_top_tokyo_image",
+            "label": "ライブラリ 東京トップ画像",
+            "name": "lib_top_tokyo_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "ライブラリセクションの東京エリア画像",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_lib_center_divider",
+            "label": "ライブラリ 中央ディバイダー",
+            "name": "lib_center_divider",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "ライブラリセクションの中央区切り画像",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_lib_top_osaka_svg",
+            "label": "ライブラリ 大阪トップSVG",
+            "name": "lib_top_osaka_svg",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "ライブラリセクションの大阪エリアSVG",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg,png,jpg,jpeg",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_sponsors_slides",
+            "label": "スポンサースライド",
+            "name": "sponsors_slides",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "スポンサーロゴスライダーの設定",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "スポンサーを追加",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_sponsor_logo",
+                    "label": "スポンサーロゴ",
+                    "name": "sponsor_logo",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "スポンサーのロゴ画像",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "thumbnail",
+                    "parent_repeater": "field_sponsors_slides"
+                },
+                {
+                    "key": "field_sponsor_name",
+                    "label": "スポンサー名",
+                    "name": "sponsor_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "スポンサー名（画像のALTテキスト）",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_sponsors_slides"
+                },
+                {
+                    "key": "field_sponsor_url",
+                    "label": "スポンサーURL",
+                    "name": "sponsor_url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "スポンサーサイトのURL",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "https://...",
+                    "parent_repeater": "field_sponsors_slides"
+                }
+            ]
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "acf-options"
             }
         ]
     ],
@@ -42,5 +331,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757341615
+    "modified": 1757343300
 }

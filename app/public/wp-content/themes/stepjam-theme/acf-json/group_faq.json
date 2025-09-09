@@ -1,15 +1,15 @@
 {
     "key": "group_faq",
-    "title": "FAQ Management",
+    "title": "FAQ設定",
     "fields": [
         {
-            "key": "field_68bee31235fbd",
-            "label": "",
-            "name": "",
+            "key": "field_faq_question",
+            "label": "質問",
+            "name": "faq_question",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
-            "required": 0,
+            "instructions": "よくある質問の内容",
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -22,6 +22,66 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_faq_answer",
+            "label": "回答",
+            "name": "faq_answer",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "質問に対する回答",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_faq_order",
+            "label": "表示順序",
+            "name": "faq_order",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "FAQの表示順序（数字が小さいほど上に表示）",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "min": 1,
+            "max": "",
+            "step": 1,
+            "placeholder": ""
+        },
+        {
+            "key": "field_faq_published",
+            "label": "公開状態",
+            "name": "faq_published",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "このFAQを公開するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "公開する",
+            "default_value": 1,
+            "ui_on_text": "公開",
+            "ui_off_text": "非公開",
+            "ui": 1
         }
     ],
     "location": [
@@ -29,7 +89,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "faq"
             }
         ]
     ],
@@ -42,5 +102,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757340447
+    "modified": 1757343500
 }

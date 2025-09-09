@@ -1,14 +1,156 @@
 {
     "key": "group_nx_tokyo",
-    "title": "NEXT SJ イベント設定",
+    "title": "NX TOKYO イベント設定",
     "fields": [
         {
-            "key": "field_68bee42619677",
-            "label": "",
-            "name": "",
+            "key": "field_nx_area_selection",
+            "label": "エリア選択",
+            "name": "nx_area_selection",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "イベント開催エリア",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "tokyo": "東京",
+                "osaka": "大阪",
+                "tohoku": "東北",
+                "none": "未設定"
+            },
+            "default_value": "none",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_nx_event_title",
+            "label": "イベントタイトル",
+            "name": "nx_event_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "イベントのメインタイトル",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "STEPJAM TOKYO",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_nx_event_subtitle",
+            "label": "イベントサブタイトル",
+            "name": "nx_event_subtitle",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "イベントのサブタイトル",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "2025 SUMMER",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_nx_content_blocks",
+            "label": "コンテンツブロック",
+            "name": "nx_content_blocks",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "イベントページのコンテンツブロック",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "コンテンツを追加",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_nx_block_type",
+                    "label": "ブロックタイプ",
+                    "name": "block_type",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "コンテンツの種類",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "text": "テキスト",
+                        "image": "画像",
+                        "video": "動画"
+                    },
+                    "default_value": "text",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_nx_content_blocks"
+                },
+                {
+                    "key": "field_nx_block_content",
+                    "label": "コンテンツ",
+                    "name": "content",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "ブロックの内容",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "parent_repeater": "field_nx_content_blocks"
+                }
+            ]
+        },
+        {
+            "key": "field_nx_day1_link",
+            "label": "DAY1 リンク",
+            "name": "nx_day1_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "DAY1イベント詳細へのリンク",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -17,11 +159,462 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "placeholder": "https://..."
+        },
+        {
+            "key": "field_nx_day2_link",
+            "label": "DAY2 リンク",
+            "name": "nx_day2_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "DAY2イベント詳細へのリンク",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://..."
+        },
+        {
+            "key": "field_nx_ticket_link",
+            "label": "チケットリンク",
+            "name": "nx_ticket_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "チケット購入ページへのリンク",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://..."
+        },
+        {
+            "key": "field_nx_background_image",
+            "label": "背景画像",
+            "name": "nx_background_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "イベントページの背景画像",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_nx_background_video",
+            "label": "背景動画",
+            "name": "nx_background_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "イベントページの背景動画",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,mov,avi,webm"
+        },
+        {
+            "key": "field_nx_background_priority",
+            "label": "背景表示優先",
+            "name": "nx_background_priority",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "背景の表示優先順位",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "画像優先",
+                "video": "動画優先"
+            },
+            "default_value": "image",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_nx_header_show",
+            "label": "ヘッダー表示",
+            "name": "nx_header_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "STEPJAMロゴとエリア画像のヘッダーを表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "ヘッダーを表示",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_nx_dancers_section_show",
+            "label": "ダンサーセクション表示",
+            "name": "nx_dancers_section_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "ダンサーセクションを表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "ダンサーセクションを表示",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_nx_day1_show",
+            "label": "DAY1表示",
+            "name": "nx_day1_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "DAY1を表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "DAY1を表示",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_nx_day2_show",
+            "label": "DAY2表示",
+            "name": "nx_day2_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "DAY2を表示するかどうか",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "DAY2を表示",
+            "default_value": 1,
+            "ui_on_text": "表示",
+            "ui_off_text": "非表示",
+            "ui": 1
+        },
+        {
+            "key": "field_nx_day1_sliders",
+            "label": "DAY1スライダー",
+            "name": "nx_day1_sliders",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "DAY1のダンサースライダー設定",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "スライダーを追加",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_nx_genre_name",
+                    "label": "ジャンル名",
+                    "name": "genre_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "ダンサーのジャンル名",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "例：HipHop, Breaking, Jazz",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_nx_day1_sliders"
+                },
+                {
+                    "key": "field_nx_dancer_slides",
+                    "label": "ダンサースライド",
+                    "name": "dancer_slides",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "このジャンルのダンサーを追加",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "row",
+                    "button_label": "ダンサーを追加",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_nx_day1_sliders",
+                    "sub_fields": [
+                        {
+                            "key": "field_nx_dancer_name",
+                            "label": "ダンサー名",
+                            "name": "dancer_name",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "ダンサーの名前",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_nx_dancer_slides"
+                        },
+                        {
+                            "key": "field_nx_dancer_bg_image",
+                            "label": "ダンサー背景画像",
+                            "name": "dancer_bg_image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "ダンサーの背景画像",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium",
+                            "parent_repeater": "field_nx_dancer_slides"
+                        },
+                        {
+                            "key": "field_nx_dancer_link",
+                            "label": "ダンサーリンク",
+                            "name": "dancer_link",
+                            "aria-label": "",
+                            "type": "url",
+                            "instructions": "ダンサーの詳細ページまたは外部リンク（任意）",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "https://...",
+                            "parent_repeater": "field_nx_dancer_slides"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_nx_day2_sliders",
+            "label": "DAY2スライダー",
+            "name": "nx_day2_sliders",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "DAY2のダンサースライダー設定",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "スライダーを追加",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_nx_genre_name_day2",
+                    "label": "ジャンル名",
+                    "name": "genre_name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "ダンサーのジャンル名",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "例：HipHop, Breaking, Jazz",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_nx_day2_sliders"
+                },
+                {
+                    "key": "field_nx_dancer_slides_day2",
+                    "label": "ダンサースライド",
+                    "name": "dancer_slides",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "このジャンルのダンサーを追加",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "row",
+                    "button_label": "ダンサーを追加",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_nx_day2_sliders",
+                    "sub_fields": [
+                        {
+                            "key": "field_nx_dancer_name_day2",
+                            "label": "ダンサー名",
+                            "name": "dancer_name",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "ダンサーの名前",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_nx_dancer_slides_day2"
+                        },
+                        {
+                            "key": "field_nx_dancer_bg_image_day2",
+                            "label": "ダンサー背景画像",
+                            "name": "dancer_bg_image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "ダンサーの背景画像",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "preview_size": "medium",
+                            "parent_repeater": "field_nx_dancer_slides_day2"
+                        },
+                        {
+                            "key": "field_nx_dancer_link_day2",
+                            "label": "ダンサーリンク",
+                            "name": "dancer_link",
+                            "aria-label": "",
+                            "type": "url",
+                            "instructions": "ダンサーの詳細ページまたは外部リンク（任意）",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "https://...",
+                            "parent_repeater": "field_nx_dancer_slides_day2"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "location": [
@@ -29,7 +622,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "nx-tokyo"
             }
         ]
     ],
@@ -42,5 +635,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757340724
+    "modified": 1736327520
 }

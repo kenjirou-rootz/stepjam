@@ -1,14 +1,14 @@
 {
     "key": "group_toroku_dancer",
-    "title": "ダンサー登録設定",
+    "title": "登録ダンサー設定",
     "fields": [
         {
-            "key": "field_68bf13074149e",
-            "label": "",
-            "name": "",
+            "key": "field_dancer_name",
+            "label": "ダンサー名",
+            "name": "dancer_name",
             "aria-label": "",
             "type": "text",
-            "instructions": "",
+            "instructions": "ダンサーの表示名（空の場合は投稿タイトルが使用されます）",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -22,6 +22,190 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_dancer_genre",
+            "label": "ダンスジャンル",
+            "name": "dancer_genre",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "ダンサーの専門ジャンル",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "HIP-HOP": "HIP-HOP",
+                "JAZZ": "JAZZ",
+                "CONTEMPORARY": "CONTEMPORARY",
+                "BALLET": "BALLET",
+                "STREET": "STREET",
+                "COMMERCIAL": "COMMERCIAL",
+                "HOUSE": "HOUSE",
+                "POPPING": "POPPING",
+                "LOCKING": "LOCKING",
+                "WAACKING": "WAACKING",
+                "KRUMP": "KRUMP",
+                "BREAKIN": "BREAKIN",
+                "OTHER": "その他"
+            },
+            "default_value": "HIP-HOP",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_dancer_profile_text",
+            "label": "プロフィールテキスト",
+            "name": "dancer_profile_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "ダンサーのプロフィール説明文",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_performance_video_1",
+            "label": "パフォーマンス動画 1",
+            "name": "performance_video_1",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "YouTubeパフォーマンス動画のURL（1本目）",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://www.youtube.com/watch?v=..."
+        },
+        {
+            "key": "field_performance_video_2",
+            "label": "パフォーマンス動画 2",
+            "name": "performance_video_2",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "YouTubeパフォーマンス動画のURL（2本目）",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://www.youtube.com/watch?v=..."
+        },
+        {
+            "key": "field_performance_fixed_image",
+            "label": "固定表示画像",
+            "name": "performance_fixed_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "ダンサープロフィールの固定表示画像",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_toroku_instagram_url",
+            "label": "Instagram URL",
+            "name": "toroku_instagram_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "InstagramプロフィールのURL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://www.instagram.com/..."
+        },
+        {
+            "key": "field_toroku_twitter_url",
+            "label": "Twitter URL",
+            "name": "toroku_twitter_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "TwitterプロフィールのURL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://twitter.com/..."
+        },
+        {
+            "key": "field_toroku_youtube_url",
+            "label": "YouTube URL",
+            "name": "toroku_youtube_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "YouTubeチャンネルのURL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://www.youtube.com/..."
+        },
+        {
+            "key": "field_toroku_tiktok_url",
+            "label": "TikTok URL",
+            "name": "toroku_tiktok_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "TikTokプロフィールのURL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://www.tiktok.com/@..."
         }
     ],
     "location": [
@@ -29,7 +213,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "toroku-dancer"
             }
         ]
     ],
@@ -42,5 +226,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757352721
+    "modified": 1757343400
 }
