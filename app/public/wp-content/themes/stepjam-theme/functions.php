@@ -186,7 +186,7 @@ function stepjam_get_next_nav_links() {
             'post_status' => 'publish',
             'meta_query' => array(
                 array(
-                    'key' => 'nx_nav_menu_area',
+                    'key' => 'nx_area_selection', // 修正: ACFフィールド名に合わせる
                     'value' => $area,
                     'compare' => '='
                 )
@@ -556,6 +556,26 @@ function stepjam_acf_sync_debug() {
             echo "<!-- ACF-Git同期システム: acf-json directory not found -->\n";
         }
     }
+}
+
+/**
+ * FAQカスタム投稿タイプのプレビューURL制御
+ * 編集画面でのプレビューボタンリンク先を/faq/に設定
+ */
+add_filter('preview_post_link', 'stepjam_faq_preview_url_control', 10, 2);
+function stepjam_faq_preview_url_control($preview_link, $post) {
+    // FAQカスタム投稿タイプのみ対象
+    if ($post->post_type === 'faq') {
+        // FAQアーカイブページのURLを取得（/faq/）
+        $faq_archive_url = get_post_type_archive_link('faq');
+        
+        if ($faq_archive_url) {
+            return $faq_archive_url;
+        }
+    }
+    
+    // その他の投稿タイプは通常のプレビューリンクを返す
+    return $preview_link;
 }
 
 /**

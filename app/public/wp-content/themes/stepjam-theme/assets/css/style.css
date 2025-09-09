@@ -855,6 +855,14 @@ html {
     .sponsor-content-container {
         flex-direction: row;
     }
+    
+    .sponsor-content-left {
+        order: 1; /* デスクトップ表示でスポンサーコンテンツを左側に配置 */
+    }
+    
+    .sponsor-logo-right {
+        order: 2; /* デスクトップ表示でロゴスライダーを右側に配置 */
+    }
 }
 
 /* Mobile Layout Adjustments */
@@ -866,10 +874,24 @@ html {
     
     .sponsor-content-left {
         flex: 0 0 30%;
+        order: 1; /* モバイル表示でスポンサーコンテンツを上部に配置 */
+        position: relative; /* 子要素の絶対配置基準 */
+        align-items: flex-end; /* 内容を下端に配置 */
+    }
+    
+    /* モバイル時のスポンサータイトル画像をbottom配置（中央揃え維持） */
+    .sponsor-content-left > div {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(55%,calc(65% + 1vw),85%);
+        height: clamp(40%,46.7%,55%);
     }
     
     .sponsor-logo-right {
         flex: 0 0 70%;
+        order: 2; /* モバイル表示でロゴスライダーを下部に配置 */
     }
     
     /* Fallback for non-grid browsers */
@@ -881,10 +903,24 @@ html {
         
         .sponsor-content-left {
             flex: 0 0 30%;
+            order: 1; /* モバイル表示でスポンサーコンテンツを上部に配置 */
+            position: relative; /* 子要素の絶対配置基準 */
+            align-items: flex-end; /* 内容を下端に配置 */
+        }
+        
+        /* Fallback: モバイル時のスポンサータイトル画像をbottom配置（中央揃え維持） */
+        .sponsor-content-left > div {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(55%,calc(65% + 1vw),85%);
+            height: clamp(40%,46.7%,55%);
         }
         
         .sponsor-logo-right {
             flex: 0 0 70%;
+            order: 2; /* モバイル表示でロゴスライダーを下部に配置 */
         }
     }
 }

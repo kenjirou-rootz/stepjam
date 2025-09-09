@@ -88,7 +88,7 @@ get_header(); ?>
                                 <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
-                                    $sponsor_main_video_01 = get_field('sponsor_main_video_01', 'option');
+                                    $sponsor_main_video_01 = function_exists('get_field') ? get_field('sponsor_main_video_01', 'option') : null;
                                     if ($sponsor_main_video_01) : 
                                         $video_url = is_array($sponsor_main_video_01) ? $sponsor_main_video_01['url'] : $sponsor_main_video_01;
                                     ?>
@@ -113,7 +113,7 @@ get_header(); ?>
                                 <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
-                                    $sponsor_main_video_02 = get_field('sponsor_main_video_02', 'option');
+                                    $sponsor_main_video_02 = function_exists('get_field') ? get_field('sponsor_main_video_02', 'option') : null;
                                     if ($sponsor_main_video_02) : ?>
                                         <video 
                                             class="w-full h-full object-cover rounded-[51px]" 
@@ -136,7 +136,7 @@ get_header(); ?>
                                 <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
-                                    $sponsor_main_video_03 = get_field('sponsor_main_video_03', 'option');
+                                    $sponsor_main_video_03 = function_exists('get_field') ? get_field('sponsor_main_video_03', 'option') : null;
                                     if ($sponsor_main_video_03) : ?>
                                         <video 
                                             class="w-full h-full object-cover rounded-[51px]" 
@@ -207,7 +207,7 @@ get_header(); ?>
                                 <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
-                                    $sponsor_main_video_02 = get_field('sponsor_main_video_02', 'option');
+                                    $sponsor_main_video_02 = function_exists('get_field') ? get_field('sponsor_main_video_02', 'option') : null;
                                     if ($sponsor_main_video_02) : ?>
                                         <video 
                                             class="w-full h-full object-cover rounded-[51px]" 
@@ -230,7 +230,7 @@ get_header(); ?>
                                 <div class="rounded-[51px] w-full h-full"
                                     >
                                     <?php 
-                                    $sponsor_main_video_03 = get_field('sponsor_main_video_03', 'option');
+                                    $sponsor_main_video_03 = function_exists('get_field') ? get_field('sponsor_main_video_03', 'option') : null;
                                     if ($sponsor_main_video_03) : ?>
                                         <video 
                                             class="w-full h-full object-cover rounded-[51px]" 
@@ -466,6 +466,9 @@ get_header(); ?>
 
         <!-- News & Info Section -->
         <?php get_template_part('template-parts/news-info-section'); ?>
+        
+        <!-- Dancers Section (NX TOKYO Event) -->
+        <?php get_template_part('template-parts/dancers-section'); ?>
         
         <!-- Lib-Top Section (Node: 156:507 Desktop / 158:60 Mobile) -->
         <!-- Desktop Lib-Top Section (Node: 156:507) - CSS Grid Layout -->

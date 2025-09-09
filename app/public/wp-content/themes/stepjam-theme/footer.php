@@ -49,14 +49,16 @@
             <!-- Right: Footer Contact (156:675) -->
             <div class="flex items-center justify-center p-4 border border-white" 
                  data-name="footer-contact">
-                <div class="relative w-full h-full">
+                <a href="/contact/" 
+                   class="relative w-full h-full block hover:opacity-80 transition-opacity duration-200"
+                   aria-label="コンタクトページへ移動">
                     <?php 
                     $footer_contact_image = stepjam_get_site_option('footer_contact_image', get_template_directory_uri() . '/assets/footer/footer-contact-image.png');
                     ?>
                     <img src="<?php echo esc_url($footer_contact_image); ?>" 
                          alt="Contact" 
                          class="w-full h-full object-cover" />
-                </div>
+                </a>
             </div>
             
         </div>
