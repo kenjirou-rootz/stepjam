@@ -503,6 +503,13 @@ $container_area_class = $area_configs[$area_selection];
     $day2_link = get_field('nx_day2_link');
     $ticket_link = get_field('nx_ticket_link');
     
+    // 表示制御フィールド
+    $header_show = get_field('nx_header_show');
+    // デフォルトはtrue（既存の投稿との互換性のため）
+    if ($header_show === null) {
+        $header_show = true;
+    }
+    
     // 背景メディア設定
     $bg_image = get_field('nx_background_image');
     $bg_video = get_field('nx_background_video');
@@ -601,7 +608,7 @@ $container_area_class = $area_configs[$area_selection];
           </video>
         <?php endif; ?>
         
-        <?php if ($area_selection && $area_selection !== 'none') : ?>
+        <?php if ($header_show && $area_selection && $area_selection !== 'none') : ?>
         <div class="nx-header <?php echo esc_attr($area_class); ?>">
           <div class="nx-logo">
             <img src="<?php echo esc_url($stepjam_logo_path); ?>" 
@@ -617,7 +624,7 @@ $container_area_class = $area_configs[$area_selection];
                  height="317">
           </div>
         </div>
-        <?php else : ?>
+        <?php elseif (!$header_show || ($area_selection === 'none')) : ?>
         <div class="nx-header-spacer"></div>
         <?php endif; ?>
         
@@ -670,10 +677,10 @@ $container_area_class = $area_configs[$area_selection];
             <?php foreach ($content_blocks as $block) : ?>
               <article class="nx-content-block">
                 <div class="nx-block-title">
-                  <h3><?php echo esc_html($block['block_title']); ?></h3>
+                  <h3><?php echo esc_html($block['block_type']); ?></h3>
                 </div>
                 <div class="nx-block-content">
-                  <p><?php echo nl2br(esc_html($block['block_content'])); ?></p>
+                  <p><?php echo nl2br(esc_html($block['content'])); ?></p>
                 </div>
               </article>
             <?php endforeach; ?>

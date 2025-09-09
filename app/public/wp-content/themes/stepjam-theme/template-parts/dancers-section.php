@@ -11,12 +11,20 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// ACFフィールド取得
-$dancers_section_show = get_field('nx_dancers_section_show');
-$day1_show = get_field('nx_day1_show');
-$day2_show = get_field('nx_day2_show');
-$day1_sliders = get_field('nx_day1_sliders');
-$day2_sliders = get_field('nx_day2_sliders');
+// ACFフィールド取得（エラーハンドリング付き）
+$dancers_section_show = false;
+$day1_show = false;
+$day2_show = false;
+$day1_sliders = array();
+$day2_sliders = array();
+
+if (function_exists('get_field')) {
+    $dancers_section_show = get_field('nx_dancers_section_show') ?: false;
+    $day1_show = get_field('nx_day1_show') ?: false;
+    $day2_show = get_field('nx_day2_show') ?: false;
+    $day1_sliders = get_field('nx_day1_sliders') ?: array();
+    $day2_sliders = get_field('nx_day2_sliders') ?: array();
+}
 
 // セクション全体が非表示の場合は何も表示しない
 if (!$dancers_section_show) {
@@ -56,38 +64,45 @@ if ($day1_show && $day2_show) {
                 
                 <!-- DAY1出演ダンサーコンテナ -->
                 <div class="dancers-section__dancers-container">
-                    <?php foreach ($day1_sliders as $slider_index => $slider): ?>
+                    <?php foreach ($day1_sliders as $slider_index => $slider): 
+                        $genre_name = isset($slider['genre_name']) ? $slider['genre_name'] : '未設定';
+                        $dancer_slides = isset($slider['dancer_slides']) ? $slider['dancer_slides'] : array();
+                    ?>
                         <div class="dancers-section__slider-container" data-slider="day1-<?php echo $slider_index; ?>">
                             <!-- ジャンルタイトル -->
                             <div class="dancers-section__genre-title">
-                                <h3 class="dancers-section__genre-text"><?php echo esc_html($slider['genre_name']); ?></h3>
+                                <h3 class="dancers-section__genre-text"><?php echo esc_html($genre_name); ?></h3>
                             </div>
                             
                             <!-- Swiperスライダー -->
                             <div class="swiper dancers-section__swiper">
                                 <div class="dancers-section__swiper-wrapper">
-                                    <?php if (!empty($slider['dancer_slides'])): ?>
-                                        <?php foreach ($slider['dancer_slides'] as $slide_index => $slide): ?>
+                                    <?php if (!empty($dancer_slides)): ?>
+                                        <?php foreach ($dancer_slides as $slide_index => $slide): 
+                                            $dancer_name = isset($slide['dancer_name']) ? $slide['dancer_name'] : '未設定';
+                                            $dancer_bg_image = isset($slide['dancer_bg_image']) ? $slide['dancer_bg_image'] : null;
+                                            $dancer_link = isset($slide['dancer_link']) ? $slide['dancer_link'] : '';
+                                        ?>
                                             <div class="dancers-section__slide swiper-slide" 
                                                  data-slide="<?php echo $slider_index; ?>-<?php echo $slide_index; ?>">
                                                 <?php 
                                                 $slide_content = '<div class="dancers-section__slide-inner">';
                                                 
-                                                // 背景画像設定
+                                                // 背景画像設定（エラーハンドリング付き）
                                                 $bg_style = '';
-                                                if (!empty($slide['dancer_bg_image'])) {
-                                                    $bg_style = 'background-image: url(' . esc_url($slide['dancer_bg_image']['url']) . ');';
+                                                if ($dancer_bg_image && is_array($dancer_bg_image) && isset($dancer_bg_image['url'])) {
+                                                    $bg_style = 'background-image: url(' . esc_url($dancer_bg_image['url']) . ');';
                                                 }
                                                 
                                                 $slide_content .= '<div class="dancers-section__slide-bg" style="' . $bg_style . '">';
                                                 $slide_content .= '<div class="dancers-section__slide-overlay">';
                                                 $slide_content .= '<div class="dancers-section__slide-text">';
-                                                $slide_content .= '<p class="dancers-section__dancer-name">' . esc_html($slide['dancer_name']) . '</p>';
+                                                $slide_content .= '<p class="dancers-section__dancer-name">' . esc_html($dancer_name) . '</p>';
                                                 $slide_content .= '</div></div></div></div>';
                                                 
                                                 // リンク設定がある場合はaタグで囲む
-                                                if (!empty($slide['dancer_link'])): ?>
-                                                    <a href="<?php echo esc_url($slide['dancer_link']); ?>" 
+                                                if (!empty($dancer_link)): ?>
+                                                    <a href="<?php echo esc_url($dancer_link); ?>" 
                                                        class="dancers-section__slide-link" 
                                                        target="_blank" 
                                                        rel="noopener noreferrer">
@@ -98,6 +113,19 @@ if ($day1_show && $day2_show) {
                                                 <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <!-- データが空の場合のメッセージ -->
+                                        <div class="dancers-section__slide swiper-slide">
+                                            <div class="dancers-section__slide-inner">
+                                                <div class="dancers-section__slide-bg">
+                                                    <div class="dancers-section__slide-overlay">
+                                                        <div class="dancers-section__slide-text">
+                                                            <p class="dancers-section__dancer-name">データがありません</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -121,38 +149,45 @@ if ($day1_show && $day2_show) {
                 
                 <!-- DAY2出演ダンサーコンテナ -->
                 <div class="dancers-section__dancers-container">
-                    <?php foreach ($day2_sliders as $slider_index => $slider): ?>
+                    <?php foreach ($day2_sliders as $slider_index => $slider): 
+                        $genre_name = isset($slider['genre_name']) ? $slider['genre_name'] : '未設定';
+                        $dancer_slides = isset($slider['dancer_slides']) ? $slider['dancer_slides'] : array();
+                    ?>
                         <div class="dancers-section__slider-container" data-slider="day2-<?php echo $slider_index; ?>">
                             <!-- ジャンルタイトル -->
                             <div class="dancers-section__genre-title">
-                                <h3 class="dancers-section__genre-text"><?php echo esc_html($slider['genre_name']); ?></h3>
+                                <h3 class="dancers-section__genre-text"><?php echo esc_html($genre_name); ?></h3>
                             </div>
                             
                             <!-- Swiperスライダー -->
                             <div class="swiper dancers-section__swiper">
                                 <div class="dancers-section__swiper-wrapper">
-                                    <?php if (!empty($slider['dancer_slides'])): ?>
-                                        <?php foreach ($slider['dancer_slides'] as $slide_index => $slide): ?>
+                                    <?php if (!empty($dancer_slides)): ?>
+                                        <?php foreach ($dancer_slides as $slide_index => $slide): 
+                                            $dancer_name = isset($slide['dancer_name']) ? $slide['dancer_name'] : '未設定';
+                                            $dancer_bg_image = isset($slide['dancer_bg_image']) ? $slide['dancer_bg_image'] : null;
+                                            $dancer_link = isset($slide['dancer_link']) ? $slide['dancer_link'] : '';
+                                        ?>
                                             <div class="dancers-section__slide swiper-slide" 
                                                  data-slide="<?php echo $slider_index; ?>-<?php echo $slide_index; ?>">
                                                 <?php 
                                                 $slide_content = '<div class="dancers-section__slide-inner">';
                                                 
-                                                // 背景画像設定
+                                                // 背景画像設定（エラーハンドリング付き）
                                                 $bg_style = '';
-                                                if (!empty($slide['dancer_bg_image'])) {
-                                                    $bg_style = 'background-image: url(' . esc_url($slide['dancer_bg_image']['url']) . ');';
+                                                if ($dancer_bg_image && is_array($dancer_bg_image) && isset($dancer_bg_image['url'])) {
+                                                    $bg_style = 'background-image: url(' . esc_url($dancer_bg_image['url']) . ');';
                                                 }
                                                 
                                                 $slide_content .= '<div class="dancers-section__slide-bg" style="' . $bg_style . '">';
                                                 $slide_content .= '<div class="dancers-section__slide-overlay">';
                                                 $slide_content .= '<div class="dancers-section__slide-text">';
-                                                $slide_content .= '<p class="dancers-section__dancer-name">' . esc_html($slide['dancer_name']) . '</p>';
+                                                $slide_content .= '<p class="dancers-section__dancer-name">' . esc_html($dancer_name) . '</p>';
                                                 $slide_content .= '</div></div></div></div>';
                                                 
                                                 // リンク設定がある場合はaタグで囲む
-                                                if (!empty($slide['dancer_link'])): ?>
-                                                    <a href="<?php echo esc_url($slide['dancer_link']); ?>" 
+                                                if (!empty($dancer_link)): ?>
+                                                    <a href="<?php echo esc_url($dancer_link); ?>" 
                                                        class="dancers-section__slide-link" 
                                                        target="_blank" 
                                                        rel="noopener noreferrer">
@@ -163,6 +198,19 @@ if ($day1_show && $day2_show) {
                                                 <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <!-- データが空の場合のメッセージ -->
+                                        <div class="dancers-section__slide swiper-slide">
+                                            <div class="dancers-section__slide-inner">
+                                                <div class="dancers-section__slide-bg">
+                                                    <div class="dancers-section__slide-overlay">
+                                                        <div class="dancers-section__slide-text">
+                                                            <p class="dancers-section__dancer-name">データがありません</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
