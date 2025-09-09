@@ -31,12 +31,12 @@ function stepjam_enqueue_scripts() {
         '11.0.0'
     );
     
-    // メインCSS（将来的にTailwindビルド版を配置予定）
+    // メインCSS（キャッシュバスト版 - Phase3強制適用）
     wp_enqueue_style(
         'stepjam-main-style',
         get_template_directory_uri() . '/assets/css/style.css',
         array(),
-        '1.0.0'
+        '1.0.0-phase3-' . time()
     );
     
     // Swiper JS を先に読み込み（main.jsより前に）

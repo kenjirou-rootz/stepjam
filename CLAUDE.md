@@ -329,3 +329,31 @@ const isDesktop = window.innerWidth >= 768;
 - **本番URL**: https://rootzexport.info
 - **GitHub**: https://github.com/kenjirou-rootz/stepjam
 - **サーバー**: Xserver (sv3020)
+
+## SSH接続設定（デプロイ必須）
+
+**⚠️ デプロイ前に必ずSSH Agent設定を実行すること**
+
+### SSH Agent起動・キー登録
+```bash
+# SSH Agent起動
+eval "$(ssh-agent -s)"
+
+# キー登録（パスフレーズ: rootz6002）
+echo "rootz6002" | ssh-add ssh/kenjirou0402.key
+ssh-add ssh/stepjam_github_ed25519
+
+# 登録確認
+ssh-add -l
+```
+
+### 接続テスト
+```bash
+# GitHub接続確認
+ssh -F ssh/config -T git@github.com
+
+# Xserver接続確認
+ssh -F ssh/config stepjam-xserver "whoami"
+```
+
+**詳細**: `/ssh/SSH-Quick-Setup-Guide.md` を参照

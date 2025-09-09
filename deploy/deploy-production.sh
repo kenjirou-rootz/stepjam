@@ -28,7 +28,7 @@ if [ -d "$THEME_PATH/acf-json" ]; then
     json_valid=true
     for json_file in "$THEME_PATH/acf-json"/*.json; do
         if [ -f "$json_file" ]; then
-            if ! python -m json.tool "$json_file" >/dev/null 2>&1; then
+            if ! python3 -m json.tool "$json_file" >/dev/null 2>&1; then
                 echo "❌ JSON形式エラー: $(basename "$json_file")"
                 json_valid=false
             fi
